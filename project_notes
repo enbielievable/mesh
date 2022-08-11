@@ -1,0 +1,26 @@
+animation libraries:
+ - http://velocityjs.org/
+
+For click to drag:
+ - There is a basic one set up for a div from a SO post.
+ - It only scrolls horrizontally
+ - Make it queery screen size, and set the size of the field to be 3x3 of the screen size.
+  - Have the center be 0,0?
+   - I need to look into how JS counts pixels from where
+  - make it respond to resizing by remembering it's location. (?) take the ratio and a coordinate for each corner and calculate where the 4 corners would be
+  - maybe make it not even drag, and just have it alter the animation state when you try to click to drag (this seems more complicated).
+
+
+For floating images: 
+ - I'm not sure if I want to use an animation library, or if I should just code it myself.
+  - most of the libraries are basically just api's and don't have anything super fancy attached. Or are for very specific use case
+  - the basic JS doesn't actually look to hard. Mostly it's knowing some math to make them look like they move more organically and not linear
+ 
+For sound:
+ - I haven't looked at this. Though there was mention of triggering sound events
+
+3d image of the posts:
+ - From everything I saw this would be the most complicated.
+ - There were some posts with letters on them that when you move around they kind of say different things depending on the viewing angle (its a recreation of a physical art exhibit)
+ - This would require a more propper 3d animation with altering the perspective while having a proper 3d model.
+ - there might be some solutions. but as for just programming it in vanila js I think it is beyond me.
