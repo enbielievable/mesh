@@ -1,35 +1,94 @@
-const slider = document.querySelector('.parent');
-// let slider = document.querySelector(".parent").b
-console.log(slider)
 
-let mouseDown = false;
-let startX, scrollLeft;
-let startY, scrollTop;
+// CLICK TO DRAG 
+// TODO: make it so you don't highlight random things when scrolling
 
-let startDragging = function (e) {
-  mouseDown = true;
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
-  startY = e.pageY - slider.offsetTop
-  scrollTop = slider.scrollTop
-};
-let stopDragging = function (event) {
-  mouseDown = false;
-};
+// SCREEN SIZING
+// TODO: make this resize when the window gets re sized
 
-slider.addEventListener('mousemove', (e) => {
-  e.preventDefault();
-  if(!mouseDown) { return; }
-  const x = e.pageX - slider.offsetLeft;
-  const scroll = x - startX;
-  slider.scrollLeft = scrollLeft - scroll;
-  const y = e.pageY - slider.offsetTop;
-  const yScroll = startY + y
-  slider.scrollTop = scrollTOp = yScroll
+// NOTE: the "view" other than just a starting location. Which means it doesn't need to have
+//       any sort of element associated with, just choordiantes. 
+// console.log(innerHeight)
+// console.log(innerWidth)
 
-});
+// scrollArea size
+// let maxHeight = innerHeight * 3
+// let maxWidth = innerWidth * 3 
 
-// Add the event listeners
-slider.addEventListener('mousedown', startDragging, false);
-slider.addEventListener('mouseup', stopDragging, false);
-slider.addEventListener('mouseleave', stopDragging, false);
+let maxHeight = 5000
+let maxWidth = 5000
+// view sizes
+let viewHeight = innerHeight
+let viewWidth = innerWidth
+
+// Set sizes
+// let scrollArea = document.querySelector('#container')
+// // let view = document.querySelector('#view')
+
+// scrollArea.setAttribute("style", `height: ${maxHeight}px; width:${maxWidth}px`)
+// view.setAttribute("style", `height: ${viewHeight}px; width: ${viewWidth}px`)
+
+// scroll to the middle
+// window.scrollTo(viewWidth, viewHeight);
+
+// NOTE:
+//  - The scrollX and scrollY of the element default to 0/0 (top left)
+//  - When the view gets set to the middle, I think it needs to be done with these instead of the window
+
+
+// get scroll area
+let ele = document.getElementById('container')
+
+ele.scrollTo(50, 50)
+
+// scroll to middle
+// ele.scrollTo(viewWidth, viewHeight)
+// set default attributes
+let mouseDown = false
+let pos = {
+  mouseX: 0,
+  mouseY: 0,
+  x: 0,
+  y: 0,
+  top: 0,
+  y: 0,
+}
+const mouseDownHandler = function (event) {
+  
+  mouseDown = true
+  pos.mouseX = event.clientX
+  pos.mouseY = event.clientY
+  console.log("mouseDownHandler pos: ")
+  // console.log(pos)
+  console.log(ele)
+  // window.scrollTo(500,500)
+    console.log(ele.scrollTop)
+    console.log(ele.scrollLeft)
+    // ele.scrollTo(500,500)
+    // ele.scrollTop += 50
+    // ele.scrollLeft += 50
+    
+}
+
+const mouseUpHandler = function (event) {
+  mouseDown = false
+  pos.x = event.clientX
+  pos.y = event.clientY
+}
+
+const mouseMoveHandler = function (event) {
+  if(mouseDown){
+    let dx = event.clientX - pos.mouseX
+    let dy = event.clientY - pos.mouseY
+    // let xMove = ele.scrollLeft - event.clientX
+    // let yMove = ele.scrollTop - event.clientY
+    // console.log(ele.scrollTop)
+    // console.log(ele.scrollLeft)
+    ele.scrollLeft -= dx
+    ele.scrollTop -= dy
+  }
+  
+}
+
+ele.addEventListener("mousedown", mouseDownHandler)
+ele.addEventListener("mouseup", mouseUpHandler)
+ele.addEventListener("mousemove", mouseMoveHandler)

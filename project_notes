@@ -6,7 +6,7 @@ For click to drag:
  - It only scrolls horrizontally
  - Make it queery screen size, and set the size of the field to be 3x3 of the screen size.
   - Have the center be 0,0?
-   - I need to look into how JS counts pixels from where
+   - I need to look into how JS counts pixels from where (top left is 0,0)
   - make it respond to resizing by remembering it's location. (?) take the ratio and a coordinate for each corner and calculate where the 4 corners would be
   - maybe make it not even drag, and just have it alter the animation state when you try to click to drag (this seems more complicated).
 

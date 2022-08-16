@@ -14,3 +14,25 @@
     padding:10px;
     cursor: pointer;
   }
+
+  .back-drop {
+    background-color: aquamarine;
+  }
+  .view-window {
+    background-color: blue;
+  }
+
+  .container {
+    width: 750px;
+    height: 750px;
+    background-color: blue;
+    overflow: scroll;
+  }
+  .view {
+    /* cursor: grab;
+    overflow: auto; */
+    background-color: aqua;
+    height: 1500px;
+    width: 1500px;
+}
+
