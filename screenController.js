@@ -92,3 +92,44 @@ const mouseMoveHandler = function (event) {
 ele.addEventListener("mousedown", mouseDownHandler)
 ele.addEventListener("mouseup", mouseUpHandler)
 ele.addEventListener("mousemove", mouseMoveHandler)
+
+
+// ANIMATIONS
+
+// max size of the animation area.
+let maxTop;
+let maxLeft;
+
+
+function makeElems() {
+  let newElement = document.createElement("div")
+  newElement.setAttribute("id", "animate")
+  newElement.appendChild(document.createTextNode("animate me :)"))
+  return newElement
+}
+
+function addElem () {
+  const aContainer = document.getElementById("a-container")
+  aContainer.appendChild(makeElems())
+  // console.log(aContainer)
+}
+// TODO: move this so it's not just called randomly in the javascript.
+addElem()
+
+// TODO: figure out how to make stuff not just go in a straight line
+function myMove() {
+  let id = null;
+  const elem = document.getElementById("animate");
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 5);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++;
+      elem.style.top = pos + 'px';
+      elem.style.left = pos + 'px';
+    }
+  }
+} 

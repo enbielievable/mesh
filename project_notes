@@ -24,3 +24,12 @@ For sound:
  - There were some posts with letters on them that when you move around they kind of say different things depending on the viewing angle (its a recreation of a physical art exhibit)
  - This would require a more propper 3d animation with altering the perspective while having a proper 3d model.
  - there might be some solutions. but as for just programming it in vanila js I think it is beyond me.
+
+
+for animations:
+ - should I make it so you can feed a json in and it will create all the images that should be animated? something like {"img_path": "", "animation_type": "", "transition": ""}
+  - animation type would be if they want more than one type of movement
+  - transition would be if it opens a video or whatever. I'm not sure the amount of transitions that is needed. From what I recall it's Sound, screen fade, video, text ?
+  - I was already pretty much planning on doing it like this. Doing a function that takes an array of animation data, and sets all of it up in the animation loop. I'm pretty sure it all has to be animated in a single function because javascript isn't multi-threaded. (maybe not?)
+  - I am running into problems with onLoad stuff. it's either. the javascript doesn't exist, or the node it's targeting doesn't exist.
+   - I might just change it to a single body onload that creates the container and all the children from the javascript so I don't need to worry about it and to make it feel a little less hacky?
