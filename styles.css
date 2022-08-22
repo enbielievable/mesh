@@ -23,9 +23,11 @@
   }
 
   .container {
-    width: 750px;
-    height: 750px;
+    /* width: 100%;
+    height: 100%; */
     background-color: blue;
+    position: relative;
+
     overflow: scroll;
   }
   .view {

@@ -1,19 +1,15 @@
-animation libraries:
- - http://velocityjs.org/
+For Next Commit:
+ - Make it so container can be larger than view. (their functionality needs to be flipped so view is targeted for the scrolling function)
+ - Make the drag scroll less sensitive, try to aim for something closing to 1:1 instead of the like 50:1 it is now
+ - Make it view start in the center of container
+ - clean up how the javascscript selects container by id 50 times.
+
 
 For click to drag:
- - There is a basic one set up for a div from a SO post.
- - It only scrolls horrizontally
  - Make it queery screen size, and set the size of the field to be 3x3 of the screen size.
-  - Have the center be 0,0?
-   - I need to look into how JS counts pixels from where (top left is 0,0)
   - make it respond to resizing by remembering it's location. (?) take the ratio and a coordinate for each corner and calculate where the 4 corners would be
-  - maybe make it not even drag, and just have it alter the animation state when you try to click to drag (this seems more complicated).
-
 
 For floating images: 
- - I'm not sure if I want to use an animation library, or if I should just code it myself.
-  - most of the libraries are basically just api's and don't have anything super fancy attached. Or are for very specific use case
   - the basic JS doesn't actually look to hard. Mostly it's knowing some math to make them look like they move more organically and not linear
  
 For sound:
