@@ -31,11 +31,11 @@
     overflow: scroll;
   }
   .view {
-    /* cursor: grab;
-    overflow: auto; */
+    /* cursor: grab; */
+    overflow: scroll;
     background-color: aqua;
-    height: 1500px;
-    width: 1500px;
+    /* height: 1500px;
+    width: 1500px; */
 }
 
 #a-container {

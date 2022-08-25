@@ -1,8 +1,9 @@
-For Next Commit:
- - Make it so container can be larger than view. (their functionality needs to be flipped so view is targeted for the scrolling function)
- - Make the drag scroll less sensitive, try to aim for something closing to 1:1 instead of the like 50:1 it is now
- - Make it view start in the center of container
- - clean up how the javascscript selects container by id 50 times.
+TODO:
+ - Make the drag scroll smoother. It feels sort of off and shitty to use
+ - Clean up the javascript.
+ - Add multiple animated elements
+ - Turn animated elements into links / onclick transitions
+ 
 
 
 For click to drag:

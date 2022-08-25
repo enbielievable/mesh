@@ -16,22 +16,25 @@
 //       
 
 // scrollArea size
-// let maxHeight = innerHeight // * 3
-// let maxWidth = innerWidth  // * 3 
+let maxHeight = innerHeight  * 3
+let maxWidth = innerWidth   * 3 
 
-let maxHeight = 750
-let maxWidth = 750
+// let maxHeight = 750
+// let maxWidth = 750
 // view sizes
 let viewHeight = innerHeight
 let viewWidth = innerWidth
 
 // Set sizes
 let scrollArea = document.querySelector('#container')
-// // let view = document.querySelector('#view')
+let view = document.querySelector('#view')
 
 scrollArea.setAttribute("style", `height: ${maxHeight}px; width:${maxWidth}px`)
-// view.setAttribute("style", `height: ${viewHeight}px; width: ${viewWidth}px`)
+view.setAttribute("style", `height: ${viewHeight}px; width: ${viewWidth}px`)
 
+// center the screen in the container.
+view.scrollLeft = viewWidth
+view.scrollTop = viewHeight
 // scroll to the middle
 // window.scrollTo(viewWidth, viewHeight);
 
@@ -43,7 +46,11 @@ scrollArea.setAttribute("style", `height: ${maxHeight}px; width:${maxWidth}px`)
 // get scroll area
 // let ele = document.getElementById('container')
 // TODO: make it so this isn't just "passed off"
+
+
 let ele = scrollArea
+// NOTE: all of the on click things are applied to the view. but the element that gets scrolled is still container.
+// let ele = document.getElementById('view')
 
 // ele.scrollTo(50, 50)
 
@@ -82,7 +89,6 @@ const mouseUpHandler = function (event) {
   pos.y = event.clientY
 }
 
-// TODO: make the scrolling less sensitive.
 const mouseMoveHandler = function (event) {
   if (mouseDown) {
     let dx = event.clientX - pos.mouseX
@@ -91,8 +97,9 @@ const mouseMoveHandler = function (event) {
     // let yMove = ele.scrollTop - event.clientY
     // console.log(ele.scrollTop)
     // console.log(ele.scrollLeft)
-    ele.scrollLeft -= dx
-    ele.scrollTop -= dy
+    console.log(pos)
+    view.scrollLeft -= (dx / 25)
+    view.scrollTop -= (dy / 25)
   }
 
 }
@@ -201,9 +208,9 @@ function randomMoveAnimation() {
       let leftMove = startLeft + makePosOrNeg(pos, move.xDir)
       elem.style.top = topMove + "px"
       elem.style.left = leftMove + "px"
-      console.log("top: " + topMove)
-      console.log("left: " + leftMove)
-      console.log(pos)
+      // console.log("top: " + topMove)
+      // console.log("left: " + leftMove)
+      // console.log(pos)
 
     }
 
