@@ -1,31 +1,8 @@
-.parent{
-    width:300px;
-    height:100px;
-    border:5px solid red;
-    overflow-x: hidden; 
-    float:left;
-  }
-  .child{
-    width:1000px;
-    height:500px;
-    float:left;
-    font-size:15px;
-    font-family:arial;
-    padding:10px;
-    cursor: pointer;
-  }
 
-  .back-drop {
-    background-color: aquamarine;
-  }
-  .view-window {
-    background-color: blue;
-  }
-
-  .container {
+.container {
     /* width: 100%;
     height: 100%; */
-    background-color: blue;
+    background-image: linear-gradient(to bottom right, red,orange,yellow,green,blue,indigo,violet); 
     position: relative;
 
     overflow: scroll;
@@ -33,7 +10,7 @@
   .view {
     /* cursor: grab; */
     overflow: scroll;
-    background-color: aqua;
+    border:5px solid red;
     /* height: 1500px;
     width: 1500px; */
 }
@@ -44,7 +21,7 @@
   position: relative;
   background: yellow;
 }
-#animate {
+.animate {
   width: 50px;
   height: 50px;
   position: absolute;
