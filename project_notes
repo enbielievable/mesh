@@ -1,9 +1,8 @@
 TODO:
  - Make the drag scroll smoother. It feels sort of off and shitty to use
- - Clean up the javascript.
- - Add multiple animated elements
  - Turn animated elements into links / onclick transitions
- 
+ - impliment photos and text and links
+ - Figure out how many elements before stuff starts to slow down. and how to make them not slow down.
 
 
 For click to drag:
