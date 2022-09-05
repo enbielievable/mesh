@@ -15,8 +15,8 @@
 //       
 
 // scrollArea size
-let maxHeight = innerHeight * 3
-let maxWidth = innerWidth * 3
+let maxHeight = innerHeight // * 3
+let maxWidth = innerWidth  // * 3
 
 // let maxHeight = 750
 // let maxWidth = 750
