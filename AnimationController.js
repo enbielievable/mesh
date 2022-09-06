@@ -1,17 +1,17 @@
 const imgLocations = [
-  "assets/1 CF012159c28x20bitmap100_RGB.png",
-  "assets/2 CF012203c28x20bitmap100_RGB.png",
-  "assets/3 CF012137c28x20bitmap100_RGB.png",
-  "assets/4 CF012173c28x20bitmap100_RGB.png",
-  "assets/5 CF012123c28x20bitmap100_RGB.png",
-  "assets/6 CF012167c28x20bitmap100_RGB.png",
-  "assets/7 CF012178c28x20bitmap100_RGB.png",
-  "assets/8 CF012126c28x20bitmap100_RGB.png",
-  "assets/9 CF012155c28x20bitmap100_RGB.png",
-  "assets/10 CF012208c28x20bitmap100_RGB.png",
-  "assets/11 CF012186c28x20bitmap100_RGB.png",
-  "assets/12 CF012130c28x20bitmap100_RGB.png",
-  "assets/CF012123c28x20bitmap100_RGB_no background.png"
+  "assets/lichens/1 CF012159c28x20bitmap100_RGB.png",
+  "assets/lichens/2 CF012203c28x20bitmap100_RGB.png",
+  "assets/lichens/3 CF012137c28x20bitmap100_RGB.png",
+  "assets/lichens/4 CF012173c28x20bitmap100_RGB.png",
+  "assets/lichens/5 CF012123c28x20bitmap100_RGB.png",
+  "assets/lichens/6 CF012167c28x20bitmap100_RGB.png",
+  "assets/lichens/7 CF012178c28x20bitmap100_RGB.png",
+  "assets/lichens/8 CF012126c28x20bitmap100_RGB.png",
+  "assets/lichens/9 CF012155c28x20bitmap100_RGB.png",
+  "assets/lichens/10 CF012208c28x20bitmap100_RGB.png",
+  "assets/lichens/11 CF012186c28x20bitmap100_RGB.png",
+  "assets/lichens/12 CF012130c28x20bitmap100_RGB.png",
+  "assets/lichens/CF012123c28x20bitmap100_RGB_no background.png"
 ]
 // TODO: Add some identifier that indicates which elements have been clicked / can be clicked
 // TODO: Make the clicked img show a larger version of the image in the modal
@@ -113,9 +113,9 @@ class AnimationController {
 
   animate() {
     console.log("Animation() called")
+    // NOTE: doing a separate animate function for each element might help with the render.
     // TODO: figure out a better way so it doesn't just go to the 4 corners.
     // TODO: Make the it not so the animated object(s) can't leave the container.
-
     // TODO: Move the pos attribute so it is unique to each element. currently they all just fly off the screen.
     let id = null
     let childElements = this.childElements
@@ -178,6 +178,7 @@ class AnimationEntity {
 
   animationStep() {
     this.loopCount++
+    // TODO: Make it not call this function every time.
     let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
     let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
     this.element.style.top = topMove + "px"

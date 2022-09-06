@@ -1,5 +1,6 @@
 // CLICK TO DRAG 
 // TODO: make it so you don't highlight random things when scrolling
+// TODO: Make it so when the mouse leaves the window while depressed it doesn't maintain the click
 
 // SCREEN SIZING
 // TODO: make this resize when the window gets re sized
@@ -15,8 +16,8 @@
 //       
 
 // scrollArea size
-let maxHeight = innerHeight // * 3
-let maxWidth = innerWidth  // * 3
+let maxHeight = innerHeight * 3
+let maxWidth = innerWidth   * 3
 
 // let maxHeight = 750
 // let maxWidth = 750
@@ -83,8 +84,10 @@ const mouseMoveHandler = function (event) {
   if (mouseDown) {
     let dx = event.clientX - pos.mouseX
     let dy = event.clientY - pos.mouseY
-    view.scrollLeft -= (dx / 25)
-    view.scrollTop -= (dy / 25)
+    // view.scrollLeft -= (dx / 25)
+    // view.scrollTop -= (dy / 25)
+    view.scrollLeft -= dx * 0.05
+    view.scrollTop -= dy * 0.05
   }
 
 }
