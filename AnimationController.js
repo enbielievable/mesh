@@ -19,19 +19,73 @@ const imgLocations = [
 
 // NOTE: Whent he animate button is pressed multiple times it speeds up the animation.
 
+function initialAnimation() {
+  // Makes mesh logo fade out and animatedImages fade in.
+  console.log("initialAnimation()")
+  const container = document.getElementById("container")
+  container.style.opacity = "0"
+  const meshLogo = document.getElementById("mesh-logo")
+  meshLogo.style.display = "block"
+  meshLogo.style.opacity = "1"
+
+  // Wait 1 second before starting the fade.
+  let initialWait = false
+  function wait() {
+    initialWait = true
+    console.log("done waiting")
+  }
+  let x = setInterval(wait, 1000)
+  clearInterval(x)
+  let fadeCount = 0
+  // let transitionDone = false
+  let transitionId = setInterval(fadeTransition, 20)
+  function fadeTransition() {
+    console.log("fadeTransition() started")
+    if (fadeCount < 100) { 
+      console.log("fade count: " + fadeCount)
+      console.log(container.style.opacity)
+      // meshLogo.style.opacity = "0.5"
+      let currentMeshOpacity = parseFloat(meshLogo.style.opacity) - 0.01
+      let currentContainerOpacity = parseFloat(container.style.opacity) + 0.01
+      meshLogo.style.opacity = currentMeshOpacity.toString()
+      container.style.opacity = currentContainerOpacity.toString()
+      fadeCount += 1
+    } else {
+      meshLogo.style.display = "none"
+      console.log("containerOpacity: " + container.style.opacity)
+      console.log("transition done")
+      
+      clearInterval(transitionId)
+
+    }
+  }
+  
+
+  // if (initialWait) {
+  //   console.log("initialWait loop")
+  //   // clearInterval(x)
+  //   if (transitionDone) {
+  //     clearInterval(transitionId)
+  //   }
+  // }
+
+}
+
+
+
 class AnimationController {
   constructor(containerId, animationList) {
     // At this point animation list could be litterally any list it requires no extra data.
     this.container = document.getElementById(containerId)
     this.childElements = this._createAnimationElements(animationList) // creates all the children to be animated.
-    console.log(this.childElements)
+    // console.log(this.childElements)
   }
   _createAnimationElements(data) {
     // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
     //       for the animation. I think it still just needs one queery. 
     //       If other things get added it might try and animate them as well
-    console.log("_createAnimationElements() ")
-    console.log("a: " + data)
+    // console.log("_createAnimationElements() ")
+    // console.log("a: " + data)
     let childs = []
     // NOTE: these include all padding and everything, while it doesn't matter now
     //       it might in the future.
@@ -68,7 +122,7 @@ class AnimationController {
       modalClose.appendChild(document.createTextNode('\u2718'))
       modalClose.onclick = function () {
         // TODO: make this freeze the background animation?
-        console.log("modalClose activated")
+        // console.log("modalClose activated")
         let modal = document.getElementById(modalId)
         modal.style.display = "none"
 
@@ -87,27 +141,27 @@ class AnimationController {
       modalText.appendChild(document.createTextNode("Yada yada"))
       modalContent.appendChild(modalText)
 
-      
 
-     
+
+
       modal.appendChild(modalContent)
       newElement.appendChild(imgTag)
       container.appendChild(newElement)
       container.appendChild(modal)
       let animationElement = new AnimationEntity(null, null, maxHeight, maxWidth, newElement)
-      console.log("element created!")
+      // console.log("element created!")
       return animationElement
     }
 
     // Create elements 
     for (let i = 0; i < data.length; i++) {
-      console.log("into the for loop!")
+      // console.log("into the for loop!")
       let id = "a" + i
       let element = createAnimationElement(data[i], id)
       childs.push(element)
-      console.log("element pushed!")
+      // console.log("element pushed!")
     }
-    console.log("childs: " + childs)
+    // console.log("childs: " + childs)
     return childs
   }
 
@@ -122,7 +176,7 @@ class AnimationController {
     clearInterval(id)
     // NOTE: 16 is 60fps and 32 is 30fps. It is currently pretty laggy with so many elements
     //       and runs better at 32
-    id = setInterval(animate, 32)
+    id = setInterval(animate, 16)
     function animate() {
       // TODO: MAKE THIS NOT FEEL LAGGY!!! async functions might actaully work. I think it doesn't complete the loop fast enough. 
       // TODO: all of this needs to change to target the child class
@@ -131,7 +185,7 @@ class AnimationController {
         // console.log(ele)
         if (ele.loopCount === ele.movementData.maxDist) {
           // RESET THE ANIMATION SO IT CHANGES DIRECTION  
-          console.log("MAX DISTANCE!!!")
+          // console.log("MAX DISTANCE!!!")
           ele.resetLoop()
 
         } else {
@@ -163,10 +217,10 @@ class AnimationEntity {
     // This has to come after the assignment or it braeks
     this.startTop = this._stripPx(this.element.style.top)
     this.startLeft = this._stripPx(this.element.style.left)
-    console.log("parentHeight: " + this._parentHeight)
-    console.log("rTop: " + this._getRandomInt(this._parentHeight) + "px")
-    console.log("rLeft: " + this._getRandomInt(this._parentWidth) + "px")
-    console.log("parentWidth: " + this._parentWidth)
+    //   console.log("parentHeight: " + this._parentHeight)
+    //   console.log("rTop: " + this._getRandomInt(this._parentHeight) + "px")
+    //   console.log("rLeft: " + this._getRandomInt(this._parentWidth) + "px")
+    //   console.log("parentWidth: " + this._parentWidth)
   }
 
   resetLoop() {
@@ -242,5 +296,6 @@ class AnimationEntity {
 }
 
 let aData = [1, 2]
-
+initialAnimation()
 let AnimationHandler = new AnimationController("container", imgLocations)
+AnimationHandler.animate()
