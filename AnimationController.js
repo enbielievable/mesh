@@ -29,7 +29,6 @@ function initialAnimation() {
   meshLogo.style.opacity = "1"
 
   // Wait 1 second before starting the fade.
-  let initialWait = false
   function wait() {
     initialWait = true
     console.log("done waiting")
@@ -52,6 +51,8 @@ function initialAnimation() {
       fadeCount += 1
     } else {
       meshLogo.style.display = "none"
+      // meshLogo.style.opacity = "1"
+      // container.style.opacity = "0"
       console.log("containerOpacity: " + container.style.opacity)
       console.log("transition done")
       
@@ -130,10 +131,13 @@ class AnimationController {
       modalContent.appendChild(modalClose)
 
       // Modal Image
+      let imgWrapper = document.createElement("div")
+      imgWrapper.setAttribute("class", "modal-img-wrapper")
       let modalImg = document.createElement("img")
       modalImg.setAttribute("src", elementData)
       modalImg.setAttribute("class", "modal-img")
-      modalContent.appendChild(modalImg)
+      imgWrapper.appendChild(modalImg)
+      modalContent.appendChild(imgWrapper)
 
       // Modal Text
       let modalText = document.createElement("p")
@@ -294,6 +298,12 @@ class AnimationEntity {
   }
 
 }
+
+function changeBg() {
+
+}
+
+
 
 let aData = [1, 2]
 initialAnimation()

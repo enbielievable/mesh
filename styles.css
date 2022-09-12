@@ -17,19 +17,40 @@
   /* cursor: grab; */
   overflow: scroll;
   border: 5px solid red;
-  /* background-image: url("assets/cover_mech.png");
+  background-image: url("assets/cover_background_2.png");
   background-repeat: no-repeat;
-  background-size: cover; */
+  background-size: cover;
   /* height: 1500px;
     width: 1500px; */
 }
-.view-background {
-  background-image: url("assets/cover_mech.png");
+
+.logo-img {
+  display: none;
+  /* Hidden by default */
+  position: absolute;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  /* left: 0;
+  top: 0; */
+  /* width: 100%; */
+  /* Full width */
+  /* height: 100%; */
+ 
+  background-image: url("assets/background_with_title.png");
   background-repeat: no-repeat;
   background-size: cover;
-  /* opacity decreses as container opacity increases */  
+  /* 
+    TODO: Figure out why i can't get mesh to center. When it is centered i'd like it to lign up perfectecly as the imagae without the logo.
+  */
+  height: 100%;
+  width: 100%;
+  /* display:block; */
+  /* margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto; */
 }
-
 
 #mesh-logo {
   /* opacity: 1; */
@@ -48,7 +69,7 @@
 }
 
 .image {
-  height: 125px;
+  height: auto;
   width: 125px;
 }
 
@@ -60,6 +81,8 @@
   user-select: none;
   /* Standard syntax */
 }
+
+
 
 
 /* The Modal (background) */
@@ -110,9 +133,17 @@
   cursor: pointer;
 }
 
-.modal-img {
+.modal-img-wrapper {
+  /* height: 100px; */
   width: 500px;
-  height: 500px;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+.modal-img {
+  width: 100%;
+  height: auto;
   display:block;
   margin-left: auto;
   margin-right: auto;
