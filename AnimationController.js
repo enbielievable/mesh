@@ -1,5 +1,5 @@
-const imgLocations = [
-  "assets/lichens/1 CF012159c28x20bitmap100_RGB.png",
+const imgSrcations = [
+  "assets/lichens/1 CF012159c28x20bitmap100_RGB.png", // 
   "assets/lichens/2 CF012203c28x20bitmap100_RGB.png",
   "assets/lichens/3 CF012137c28x20bitmap100_RGB.png",
   "assets/lichens/4 CF012173c28x20bitmap100_RGB.png",
@@ -13,6 +13,71 @@ const imgLocations = [
   "assets/lichens/12 CF012130c28x20bitmap100_RGB.png",
   "assets/lichens/CF012123c28x20bitmap100_RGB_no background.png"
 ]
+
+const imgData = [
+  {
+    imgSrc: "assets/lichens/1 CF012159c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012159_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/2 CF012203c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012203_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/3 CF012137c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012137_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/4 CF012173c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012173_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/5 CF012123c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012123_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/6 CF012167c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012167_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/7 CF012178c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012178_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/8 CF012126c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012126_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/9 CF012155c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012155_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/10 CF012208c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012208_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/11 CF012186c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012186_no background.png",
+    title: ""
+  },
+  {
+    imgSrc: "assets/lichens/12 CF012130c28x20bitmap100_RGB.png",
+    imgNoBg: "assets/noBg/CF012130_no background.png",
+    title: ""
+  },
+]
+
+
 // TODO: Add some identifier that indicates which elements have been clicked / can be clicked
 // TODO: Make the clicked img show a larger version of the image in the modal
 // TODO: add some lorem ipsum text to the modals
@@ -21,7 +86,7 @@ const imgLocations = [
 
 function initialAnimation() {
   // Makes mesh logo fade out and animatedImages fade in.
-  console.log("initialAnimation()")
+  // console.log("initialAnimation()")
   const container = document.getElementById("container")
   container.style.opacity = "0"
   const meshLogo = document.getElementById("mesh-logo")
@@ -39,10 +104,10 @@ function initialAnimation() {
   // let transitionDone = false
   let transitionId = setInterval(fadeTransition, 20)
   function fadeTransition() {
-    console.log("fadeTransition() started")
-    if (fadeCount < 100) { 
-      console.log("fade count: " + fadeCount)
-      console.log(container.style.opacity)
+    // console.log("fadeTransition() started")
+    if (fadeCount < 100) {
+      // console.log("fade count: " + fadeCount)
+      // console.log(container.style.opacity)
       // meshLogo.style.opacity = "0.5"
       let currentMeshOpacity = parseFloat(meshLogo.style.opacity) - 0.01
       let currentContainerOpacity = parseFloat(container.style.opacity) + 0.01
@@ -53,33 +118,137 @@ function initialAnimation() {
       meshLogo.style.display = "none"
       // meshLogo.style.opacity = "1"
       // container.style.opacity = "0"
-      console.log("containerOpacity: " + container.style.opacity)
-      console.log("transition done")
-      
+      // console.log("containerOpacity: " + container.style.opacity)
+      // console.log("transition done")
+
       clearInterval(transitionId)
 
     }
   }
+}
+
+function AnimationElementsFactory(data, container) {
+  // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
+  //       for the animation. I think it still just needs one queery. 
+  //       If other things get added it might try and animate them as well
+
+  // Create a AnimationEntity of the boarderless lichen image
+  // create associated Modal
+
+  // data.title // Tittle of the image
+  // data.imgSrc // Image source with backgroung
+  // data.imgNoBg // Image wihtout background for animation entity
+
+  let childs = []
+  // NOTE: these include all padding and everything, while it doesn't matter now
+  //       it might in the future.
+  let maxHeight = container.offsetHeight // For the child class
+  let maxWidth = container.offsetWidth
   
 
-  // if (initialWait) {
-  //   console.log("initialWait loop")
-  //   // clearInterval(x)
-  //   if (transitionDone) {
-  //     clearInterval(transitionId)
-  //   }
-  // }
+  function createModalContent(imgSrc, modalId,) {
+    // TODO: Make the modal image open centered, and scaled to fit in the window.
+    //       I think whatever is making this not open centered is also what is causing the mesh logo to not center.
+    // modalData.id   Gotten from place in the array
+    // modalData.imgSrc
+    // modalData.imgNoBg
+    let modal = document.createElement("div")
+    // let modalId = "m" + id
+    modal.setAttribute("class", "modal")
+    modal.setAttribute("id", modalId)
+   
 
+    let modalContent = document.createElement("div")
+      modalContent.setAttribute("class", "modal-content")
+    // close button
+    let modalClose = document.createElement("span")
+    modalClose.setAttribute("class", "close")
+    modalClose.appendChild(document.createTextNode('\u2718'))
+    modalClose.onclick = function () {
+      // TODO: make this freeze the background animation?
+      // console.log("modalClose activated")
+      let modal = document.getElementById(modalId)
+      modal.style.display = "none"
+
+    }
+    // Add close button to modal
+    modalContent.appendChild(modalClose)
+
+    // Modal Image
+    let imgWrapper = document.createElement("div")
+    imgWrapper.setAttribute("class", "modal-img-wrapper")
+    let modalImg = document.createElement("img")
+    modalImg.setAttribute("src", imgSrc)
+    modalImg.setAttribute("class", "modal-img")
+    imgWrapper.appendChild(modalImg)
+    modalContent.appendChild(imgWrapper)
+    modal.appendChild(modalContent)
+    // Image title
+    // let modalText = document.createElement("p")
+    // // TODO: make it get this info from elementData
+    // modalText.appendChild(document.createTextNode("Yada yada"))
+    // modalContent.appendChild(modalText)
+    return modal
+  }
+
+
+  function createAnimationElement(data, id) {
+    // data.imgSrc -> the src to the image with a background
+    // data.imgNoBg -> src of image with no background
+
+    // TODO: add images and onclicks to be assigned here
+    // let randomPos = getRandomPosition(maxHeight, maxWidth)
+    // CONTAINER
+    let animationDiv = document.createElement("div")
+    animationDiv.setAttribute("class", "animate")
+
+
+    // IMAGE
+    let imgTag = document.createElement("img")
+    imgTag.setAttribute("src", data.imgNoBg) // TODO: make this a propper object not just info from an array.
+    imgTag.setAttribute("class", "image")
+    imgTag.setAttribute("id", id)
+    imgTag.onclick = function () { // display modal on click
+      let modal = document.getElementById(modalId)
+      modal.style.display = "block"
+    }
+    let modalId = "m" + id
+    let modal = createModalContent(data.imgSrc, modalId)
+    console.log("modal: ")
+    console.log(modal)
+    console.log("***")
+
+
+
+    // modal.appendChild(modalContent)
+    animationDiv.appendChild(imgTag)
+    container.appendChild(animationDiv)
+    container.appendChild(modal)
+    // TODO: figure out maxHeight, maxWidth, stuff
+    let animationElement = new AnimationEntity(null, null, maxHeight, maxWidth, animationDiv)
+    // console.log("element created!")
+    return animationElement
+  }
+
+  // Create elements 
+  for (let i = 0; i < data.length; i++) {
+    // console.log("into the for loop!")
+    let id = "a" + i
+    let element = createAnimationElement(data[i], id)
+    childs.push(element)
+    // console.log("element pushed!")
+  }
+  // console.log("childs: " + childs)
+  return childs
 }
 
 
-
 class AnimationController {
-  constructor(containerId, animationList) {
+  constructor(container, animationList) {
     // At this point animation list could be litterally any list it requires no extra data.
-    this.container = document.getElementById(containerId)
-    this.childElements = this._createAnimationElements(animationList) // creates all the children to be animated.
-    // console.log(this.childElements)
+    this.container = container
+    this.childElements = AnimationElementsFactory(animationList, container) // creates all the children to be animated.
+    console.log(this.childElements)
   }
   _createAnimationElements(data) {
     // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
@@ -170,7 +339,7 @@ class AnimationController {
   }
 
   animate() {
-    console.log("Animation() called")
+    // console.log("Animation() called")
     // NOTE: doing a separate animate function for each element might help with the render.
     // TODO: figure out a better way so it doesn't just go to the 4 corners.
     // TODO: Make the it not so the animated object(s) can't leave the container.
@@ -299,13 +468,9 @@ class AnimationEntity {
 
 }
 
-function changeBg() {
-
-}
 
 
-
-let aData = [1, 2]
 initialAnimation()
-let AnimationHandler = new AnimationController("container", imgLocations)
+const container = document.getElementById("container")
+let AnimationHandler = new AnimationController(container, imgData)
 AnimationHandler.animate()
