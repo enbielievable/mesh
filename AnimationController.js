@@ -1,19 +1,3 @@
-const imgSrcations = [
-  "assets/lichens/1 CF012159c28x20bitmap100_RGB.png", // 
-  "assets/lichens/2 CF012203c28x20bitmap100_RGB.png",
-  "assets/lichens/3 CF012137c28x20bitmap100_RGB.png",
-  "assets/lichens/4 CF012173c28x20bitmap100_RGB.png",
-  "assets/lichens/5 CF012123c28x20bitmap100_RGB.png",
-  "assets/lichens/6 CF012167c28x20bitmap100_RGB.png",
-  "assets/lichens/7 CF012178c28x20bitmap100_RGB.png",
-  "assets/lichens/8 CF012126c28x20bitmap100_RGB.png",
-  "assets/lichens/9 CF012155c28x20bitmap100_RGB.png",
-  "assets/lichens/10 CF012208c28x20bitmap100_RGB.png",
-  "assets/lichens/11 CF012186c28x20bitmap100_RGB.png",
-  "assets/lichens/12 CF012130c28x20bitmap100_RGB.png",
-  "assets/lichens/CF012123c28x20bitmap100_RGB_no background.png"
-]
-
 const imgData = [
   {
     imgSrc: "assets/lichens/1 CF012159c28x20bitmap100_RGB.png",
@@ -79,8 +63,7 @@ const imgData = [
 
 
 // TODO: Add some identifier that indicates which elements have been clicked / can be clicked
-// TODO: Make the clicked img show a larger version of the image in the modal
-// TODO: add some lorem ipsum text to the modals
+// TODO: figure out why when it's not max sized, the mesh logo's display is scewed in a different way.
 
 // NOTE: Whent he animate button is pressed multiple times it speeds up the animation.
 
@@ -144,6 +127,8 @@ function AnimationElementsFactory(data, container) {
   //       it might in the future.
   let maxHeight = container.offsetHeight // For the child class
   let maxWidth = container.offsetWidth
+  console.log(maxHeight)
+  console.log(maxWidth)
   
 
   function createModalContent(imgSrc, modalId,) {
@@ -214,9 +199,9 @@ function AnimationElementsFactory(data, container) {
     }
     let modalId = "m" + id
     let modal = createModalContent(data.imgSrc, modalId)
-    console.log("modal: ")
-    console.log(modal)
-    console.log("***")
+    // console.log("modal: ")
+    // console.log(modal)
+    // console.log("***")
 
 
 
@@ -225,7 +210,7 @@ function AnimationElementsFactory(data, container) {
     container.appendChild(animationDiv)
     container.appendChild(modal)
     // TODO: figure out maxHeight, maxWidth, stuff
-    let animationElement = new AnimationEntity(null, null, maxHeight, maxWidth, animationDiv)
+    let animationElement = new AnimationEntity(maxHeight, maxWidth, animationDiv)
     // console.log("element created!")
     return animationElement
   }
@@ -244,98 +229,11 @@ function AnimationElementsFactory(data, container) {
 
 
 class AnimationController {
-  constructor(container, animationList) {
+  constructor(container, animationEntities) {
     // At this point animation list could be litterally any list it requires no extra data.
     this.container = container
-    this.childElements = AnimationElementsFactory(animationList, container) // creates all the children to be animated.
+    this.childElements = animationEntities // creates all the children to be animated.
     console.log(this.childElements)
-  }
-  _createAnimationElements(data) {
-    // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
-    //       for the animation. I think it still just needs one queery. 
-    //       If other things get added it might try and animate them as well
-    // console.log("_createAnimationElements() ")
-    // console.log("a: " + data)
-    let childs = []
-    // NOTE: these include all padding and everything, while it doesn't matter now
-    //       it might in the future.
-    let maxHeight = this.container.offsetHeight // For the child class
-    let maxWidth = this.container.offsetWidth
-    let container = this.container
-    function createAnimationElement(elementData, id) {
-      // TODO: add images and onclicks to be assigned here
-      // let randomPos = getRandomPosition(maxHeight, maxWidth)
-      // CONTAINER
-      let newElement = document.createElement("div")
-      newElement.setAttribute("class", "animate")
-      // IMAGE
-      let imgTag = document.createElement("img")
-      imgTag.setAttribute("src", elementData) // TODO: make this a propper object not just info from an array.
-      imgTag.setAttribute("class", "image")
-      imgTag.setAttribute("id", id)
-      imgTag.onclick = function () { // display modal on click
-        let modal = document.getElementById(modalId)
-        modal.style.display = "block"
-      }
-      // Modal
-      let modal = document.createElement("div")
-      let modalId = "m" + id
-      modal.setAttribute("class", "modal")
-      modal.setAttribute("id", modalId)
-
-      let modalContent = document.createElement("div")
-      modalContent.setAttribute("class", "modal-content")
-
-      // Modal Close
-      let modalClose = document.createElement("span")
-      modalClose.setAttribute("class", "close")
-      modalClose.appendChild(document.createTextNode('\u2718'))
-      modalClose.onclick = function () {
-        // TODO: make this freeze the background animation?
-        // console.log("modalClose activated")
-        let modal = document.getElementById(modalId)
-        modal.style.display = "none"
-
-      }
-      modalContent.appendChild(modalClose)
-
-      // Modal Image
-      let imgWrapper = document.createElement("div")
-      imgWrapper.setAttribute("class", "modal-img-wrapper")
-      let modalImg = document.createElement("img")
-      modalImg.setAttribute("src", elementData)
-      modalImg.setAttribute("class", "modal-img")
-      imgWrapper.appendChild(modalImg)
-      modalContent.appendChild(imgWrapper)
-
-      // Modal Text
-      let modalText = document.createElement("p")
-      // TODO: make it get this info from elementData
-      modalText.appendChild(document.createTextNode("Yada yada"))
-      modalContent.appendChild(modalText)
-
-
-
-
-      modal.appendChild(modalContent)
-      newElement.appendChild(imgTag)
-      container.appendChild(newElement)
-      container.appendChild(modal)
-      let animationElement = new AnimationEntity(null, null, maxHeight, maxWidth, newElement)
-      // console.log("element created!")
-      return animationElement
-    }
-
-    // Create elements 
-    for (let i = 0; i < data.length; i++) {
-      // console.log("into the for loop!")
-      let id = "a" + i
-      let element = createAnimationElement(data[i], id)
-      childs.push(element)
-      // console.log("element pushed!")
-    }
-    // console.log("childs: " + childs)
-    return childs
   }
 
   animate() {
@@ -370,16 +268,16 @@ class AnimationController {
 
 }
 
+
 class AnimationEntity {
   // NOTES: How does this class know about its html parent
   //        does it just get fed it's created html element?
   //        it could get its parent and get its height and width for its location
-  constructor(img, onClick, parentHeight, parentWidth, element) {
+  constructor(parentHeight, parentWidth, element) {
     this.element = element
-    this.img = img
-    this.onClick = onClick
     this._parentHeight = parentHeight
     this._parentWidth = parentWidth
+    
 
     this.movementData = this._randomMove() // TODO: switch this so it's not an object and just assigns 3 attributes to the class
     this.loopCount = 0
@@ -405,9 +303,22 @@ class AnimationEntity {
 
   animationStep() {
     this.loopCount++
+   
     // TODO: Make it not call this function every time.
     let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
     let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
+    // console.log(topMove)
+    if(topMove > this._parentHeight || topMove <= 0){
+      // console.log("ITS TO HIGH")
+      this.resetLoop() 
+    }
+    if(leftMove > this._parentWidth || leftMove <= 0){
+    // console.log("it's to over")
+    this.resetLoop()
+  }
+    // if(topMove >= this._parentHeight || topMove <= 0 || leftmove >= this._parentWidth || leftMove <= 0){
+    //   console.log("Element trying to go out of bounds!!")
+    // }
     this.element.style.top = topMove + "px"
     this.element.style.left = leftMove + "px"
   }
@@ -472,5 +383,6 @@ class AnimationEntity {
 
 initialAnimation()
 const container = document.getElementById("container")
-let AnimationHandler = new AnimationController(container, imgData)
+const animationEntities = AnimationElementsFactory(imgData, container)
+let AnimationHandler = new AnimationController(container, animationEntities)
 AnimationHandler.animate()

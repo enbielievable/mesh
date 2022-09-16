@@ -1,7 +1,7 @@
 // CLICK TO DRAG 
-// TODO: make it so you don't highlight random things when scrolling
 // TODO: Make it so when the mouse leaves the window while depressed it doesn't maintain the click
-
+// TODO: Make it so when you drag on an image it doesn't read depressing the mose
+//       For the image problem, making it so they are just div's with a background image might fix it.
 // SCREEN SIZING
 // TODO: make this resize when the window gets re sized
 
@@ -14,16 +14,25 @@
 //       i'm going to need to flip that in the code. so view is smaller than container
 //       the animations still need to target the container so they can be searched for.
 //       
-
+let body = document.getElementById("body")
+let viewHeight = innerHeight - 25
+let viewWidth = body.clientWidth - 25
 // scrollArea size
-let maxHeight = innerHeight * 3
-let maxWidth = innerWidth   * 3
+let maxHeight = (viewHeight * 3)
+let maxWidth = (viewHeight  * 3)
 
 // let maxHeight = 750
 // let maxWidth = 750
 // view sizes
-let viewHeight = innerHeight
-let viewWidth = innerWidth
+
+console.log("height: ")
+console.log(viewHeight + "/" + window.innerHeight)
+console.log("width: ")
+console.log(viewWidth + "/" + window.innerWidth)
+// console.log("self.innerHeight: " + self.innerHeight)
+// console.log(parent.innerHeight);
+// console.log(top.innerHeight);
+
 
 // Set sizes
 let scrollArea = document.querySelector('#container')
