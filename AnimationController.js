@@ -144,7 +144,7 @@ function AnimationElementsFactory(data, container) {
    
 
     let modalContent = document.createElement("div")
-      modalContent.setAttribute("class", "modal-content")
+    modalContent.setAttribute("class", "modal-content")
     // close button
     let modalClose = document.createElement("span")
     modalClose.setAttribute("class", "close")
@@ -160,13 +160,14 @@ function AnimationElementsFactory(data, container) {
     modalContent.appendChild(modalClose)
 
     // Modal Image
-    let imgWrapper = document.createElement("div")
-    imgWrapper.setAttribute("class", "modal-img-wrapper")
+    // let imgWrapper = document.createElement("div")
+    // imgWrapper.setAttribute("class", "modal-img-wrapper")
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
-    imgWrapper.appendChild(modalImg)
-    modalContent.appendChild(imgWrapper)
+    // imgWrapper.appendChild(modalImg)
+    // modalContent.appendChild(imgWrapper)
+    modalContent.appendChild(modalImg)
     modal.appendChild(modalContent)
     // Image title
     // let modalText = document.createElement("p")

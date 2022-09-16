@@ -42,8 +42,8 @@ scrollArea.setAttribute("style", `height: ${maxHeight}px; width:${maxWidth}px`)
 view.setAttribute("style", `height: ${viewHeight}px; width: ${viewWidth}px`)
 
 // center the screen in the container.
-// view.scrollLeft = viewWidth
-// view.scrollTop = viewHeight
+view.scrollLeft = viewWidth
+view.scrollTop = viewHeight
 // scroll to the middle
 // window.scrollTo(viewWidth, viewHeight);
 
