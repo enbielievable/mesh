@@ -110,6 +110,8 @@ function initialAnimation() {
   }
 }
 
+
+
 function AnimationElementsFactory(data, container) {
   // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
   //       for the animation. I think it still just needs one queery. 
@@ -129,7 +131,7 @@ function AnimationElementsFactory(data, container) {
   let maxWidth = container.offsetWidth
   console.log(maxHeight)
   console.log(maxWidth)
-  
+
 
   function createModalContent(imgSrc, modalId,) {
     // TODO: Make the modal image open centered, and scaled to fit in the window.
@@ -141,7 +143,7 @@ function AnimationElementsFactory(data, container) {
     // let modalId = "m" + id
     modal.setAttribute("class", "modal")
     modal.setAttribute("id", modalId)
-   
+
 
     let modalContent = document.createElement("div")
     modalContent.setAttribute("class", "modal-content")
@@ -228,13 +230,130 @@ function AnimationElementsFactory(data, container) {
   return childs
 }
 
+class Letter {
+  constructor(letter) {
+    this.letter = letter // span containing a litter
+    this.currentOpacity = 0
+    this.currentMaxOpacity = 0
+    this.currentMinOpacity = 0
+    this.isAnimating = false
+    this.increasing = false
+    this.timerId = null
+  }
+  setOpacityLimits() {
+    if (this.currentMinOpacity < 1) {
+      this.currentMinOpacity += 0.05
+      if (this.currentMinOpacity * 2 < 1) {
+        this.currentMaxOpacity += 0.1
+      }
+    }
+  }
+
+  increaseOpacity() {
+    let opacityIncriment = this.currentOpacity + 0.01
+    this.letter.style.opacity = opacityIncriment.toString()
+  }
+  decreaseOpacity() {
+    let opacityIncriment = this.currentOpacity - 0.01
+    this.letter.style.opacity = opacityIncriment.toString()
+  }
+  animationStep() {
+     // set the flag that this element is animating
+     // Increase currentMaxOpacity and currentMinOpacity
+    while (this.currentOpacity < this.currentMaxOpacity) {
+      // After this is done will it just move on?
+      this.increaseOpacity()
+    }
+    while (this.currentOpacity > this.currentMinOpacity) {
+      this.decreaseOpacity()
+    }
+  }
+
+  animate() {
+    this.isAnimating = true
+    this.setOpacityLimits()
+    this.timerId = setInterval(this.animationStep, 10)
+    clearInterval(this.timerId)
+    this.isanimating = false
+  }
+
+
+}
+
+
+class BackgroundTextAnimationController {
+  // TODO: Add the fade animation?
+  // TODO: Center the text in the middle of the view
+  constructor(textContainerId, textElementId) {
+    this.textContainerId = textContainerId
+    this.textElementId = textElementId
+    // I might need to change this to a list of classes because i need extra data
+    // like how many times it's faded
+    this.letters = this.separateText()
+    this.letterInfo = Array(this.letters.childElementCount).fill(0)
+    console.log("this.letterInfo")
+    console.log(this.letterInfo)
+    // console.log(this.letters)
+  }
+  separateText() {
+    // This function separates the background text into their own elements so they can idividually be altered
+    let bgTextP = document.getElementById(this.textElementId)
+    let bgText = bgTextP.innerHTML
+    let bgTextContainer = document.getElementById(this.textContainerId)
+    for (let i = 0; i < bgText.length; i++) {
+      // console.log("in the loop")
+      let l = document.createElement("span")
+      l.setAttribute("class", "letter")
+      l.innerText = bgText[i]
+      l.style.opacity = "0"
+      bgTextContainer.appendChild(l)
+    }
+    bgTextP.remove()
+    return bgTextContainer
+  }
+  selectLetter() {
+    const count = this.letters.childElementCount
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+    return getRandomInt(count)
+  }
+  // animationStep() {
+  //   console.log("animation Stepped")
+  //   const selectedNumber = this.selectLetter()
+  //   let letterInfo = this.letterInfo[selectedNumber]
+  //   if (letterInfo < 1) {
+  //     // console.log("selectedNumber")
+  //     // console.log(selectedNumber)
+  //     const letter = this.letters.children[selectedNumber] // Randomly select a letter
+  //     // console.log("letter")
+  //     // console.log(letter)
+  //     // console.log("letterInfo")
+  //     // console.log(letterInfo)
+  //     let opacity = letterInfo + 0.1
+  //     this.letterInfo[selectedNumber] += 0.1
+  //     // console.log("opacity")
+  //     // console.log(opacity)
+  //     letter.style.opacity = opacity.toString()
+  //     // console.log("letter opacity")
+  //     // console.log(letter.style.opacity)
+  //   }
+  // }
+  
+  // TODO: make this a function to trigger the animations
+  
+
+
+
+}
+
 
 class AnimationController {
   constructor(container, animationEntities) {
     // At this point animation list could be litterally any list it requires no extra data.
     this.container = container
     this.childElements = animationEntities // creates all the children to be animated.
-    console.log(this.childElements)
+    // console.log(this.childElements)
   }
 
   animate() {
@@ -278,7 +397,7 @@ class AnimationEntity {
     this.element = element
     this._parentHeight = parentHeight
     this._parentWidth = parentWidth
-    
+
 
     this.movementData = this._randomMove() // TODO: switch this so it's not an object and just assigns 3 attributes to the class
     this.loopCount = 0
@@ -304,19 +423,19 @@ class AnimationEntity {
 
   animationStep() {
     this.loopCount++
-   
+
     // TODO: Make it not call this function every time.
     let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
     let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
     // console.log(topMove)
-    if(topMove > this._parentHeight || topMove <= 0){
+    if (topMove > this._parentHeight || topMove <= 0) {
       // console.log("ITS TO HIGH")
-      this.resetLoop() 
+      this.resetLoop()
     }
-    if(leftMove > this._parentWidth || leftMove <= 0){
-    // console.log("it's to over")
-    this.resetLoop()
-  }
+    if (leftMove > this._parentWidth || leftMove <= 0) {
+      // console.log("it's to over")
+      this.resetLoop()
+    }
     // if(topMove >= this._parentHeight || topMove <= 0 || leftmove >= this._parentWidth || leftMove <= 0){
     //   console.log("Element trying to go out of bounds!!")
     // }
@@ -380,6 +499,11 @@ class AnimationEntity {
 
 }
 
+const bgTextElement = document.getElementById("bg-text")
+console.log(bgTextElement)
+
+
+
 
 
 initialAnimation()
@@ -387,3 +511,12 @@ const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)
 AnimationHandler.animate()
+
+
+// const BgTextController = new BackgroundTextAnimationController("text-container", "bg-text")
+// let c = 0
+// while (c < 1000) {
+//   console.log("while loop")
+//   BgTextController.animationStep()
+//   c += 1
+// }
