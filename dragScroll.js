@@ -18,8 +18,8 @@ let body = document.getElementById("body")
 let viewHeight = innerHeight - 25
 let viewWidth = body.clientWidth - 25
 // scrollArea size
-let maxHeight = viewHeight //* 3
-let maxWidth = viewHeight  //* 3
+let maxHeight = viewHeight * 3
+let maxWidth = viewHeight  * 3
 
 // let maxHeight = 750
 // let maxWidth = 750
@@ -57,6 +57,80 @@ view.scrollTop = viewHeight
 // TODO: make it so this isn't just "passed off"
 
 
+class Letter {
+  constructor(letter) {
+    this.letter = letter
+    this._currentOpacity = 0
+    this.done = false
+  }
+  get currentOpacity() {
+    return this._currentOpacity.toFixed(2)
+  }
+
+  increaseOpacity() {
+    console.log("increaseOpacity triggered")
+    if(this.currentOpacity < 1){
+      // NOTE: Opacity increase amount
+      this._currentOpacity += 0.1
+      this.letter.style.opacity = this.currentOpacity.toString()
+    } else {
+      this.done = true
+    }
+  }
+}
+
+
+class BackgroundTextAnimationController {
+  // TODO: Center the text in the middle of the view
+  constructor(textContainerId, textElementId) {
+    this.textContainerId = textContainerId
+    this.textElementId = textElementId
+    this.letters = this.separateText()
+
+  }
+  separateText() {
+    // Letter Factory
+    // This function separates the background text into their own elements so they can idividually be altered
+    let bgTextP = document.getElementById(this.textElementId)
+    let bgText = bgTextP.innerHTML
+    let bgTextContainer = document.getElementById(this.textContainerId)
+    let letters = []
+    for (let i = 0; i < bgText.length; i++) {
+      // console.log("in the loop")
+      let l = document.createElement("span")
+      l.setAttribute("class", "letter")
+      l.innerText = bgText[i]
+      l.style.opacity = "0"
+      let letter = new Letter(l)
+      bgTextContainer.appendChild(l)
+      letters.push(letter)
+    }
+    bgTextP.remove()
+    // return bgTextContainer
+    return letters
+  }
+
+
+  selectLetter() {
+    const count = this.letters.length
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+    return getRandomInt(count)
+  }
+
+  increaseRandomLetterOpacity(){
+    let letterPos = this.selectLetter()
+    let selectedLetter = this.letters[letterPos]
+    selectedLetter.increaseOpacity()
+    if(selectedLetter.done){
+      // remove the letter from the array
+      // NOTE: it does not get removed untill it's selected again at max
+      this.letter.splice(letterPos, 1)
+    }
+  }
+}
+
 let ele = scrollArea
 // NOTE: all of the on click things are applied to the view. but the element that gets scrolled is still container.
 // let ele = document.getElementById('view')
@@ -75,6 +149,13 @@ let pos = {
   top: 0,
   y: 0,
 }
+
+const BgTextController = new BackgroundTextAnimationController("text-container", "bg-text")
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 const mouseDownHandler = function (event) {
 
   mouseDown = true
@@ -91,6 +172,12 @@ const mouseUpHandler = function (event) {
 
 const mouseMoveHandler = function (event) {
   if (mouseDown) {
+    // Generate a numbet o highlight background text.
+    let rNumber = getRandomInt(100) + 1
+    if (rNumber <= 100) {
+      // 10% chance to increase a letter opacity
+      BgTextController.increaseRandomLetterOpacity()
+    }
     let dx = event.clientX - pos.mouseX
     let dy = event.clientY - pos.mouseY
     // view.scrollLeft -= (dx / 25)

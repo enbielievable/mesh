@@ -109,9 +109,22 @@
 }
 
 .background-text-container{
-  background-color: white;
-  font-size:72px;
+  position: fixed;
+  /* height: 100%; */
+  width: 100%;
+  /* background-color: white; */
+  color: white;
+  font-size: 32px;
+  margin: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+  /* display: flex; */
+  text-align: center;
+  /* justify-content: center; */
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .letter {
-  
+  justify-content: center;
 }
