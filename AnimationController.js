@@ -230,13 +230,66 @@ function AnimationElementsFactory(data, container) {
   return childs
 }
 
+class BetterLetter {
+  constructor(letter) {
+    this.letter = letter
+    this.currentMaxOpacity = 0
+    this._currentOpacity = 0
+    this.isAnimating = false
+    this.animationId = null
+    this.done = false
+  }
+  get currentOpacity() {
+    return this._currentOpacity.toFixed(2)
+  }
+  increaseMaxOpacity() {
+    if (this.currentMaxOpacity < 1) {
+      this.currentMaxOpacity += 0.05
+    } 
+  }
+  increaseOpacity() {
+    // if(this.currentOpacity < 1 && this.currentMaxOpacity > this.currentOpacity){
+    //   this._currentOpacity += 0.01
+    //   this.letter.style.opacity = this.currentOpacity.toString()
+    // } else {
+    //   this.isAnimating = false
+    //   console.log("Opacity is max :)")
+    // }
+    if (this.currentOpacity === 1) {
+      this.done = true
+    } else if(this.currentOpacity < this.currentMaxOpacity){
+      this._currentOpacity += 0.01
+      this.letter.style.opacity = this.currentOpacity.toString()
+    }
+  }
+  animate() {
+    function transition() {
+       // increase the limit
+      if (this.isAnimating) {
+        this.increaseOpacity()
+      } else {
+        console.log("animation over!")
+        this.animationId = clearInterval(this.animationId)
+        console.log("animationId: " + this.animationId)
+        console.log("")
+      }
+    }
+
+    this.increaseMaxOpacity()
+    this.isAnimating = true
+    // transition.bind(this)
+    this.timerId = setInterval(transition.bind(this), 100)
+  }
+}
+
 class Letter {
+  // TODO: remove the fade out. just make them slowly fade in.
   constructor(letter) {
     this.letter = letter // span containing a litter
     this._currentOpacity = 0
     this._currentMaxOpacity = 0
     this._currentMinOpacity = 0
-    this.isAnimating = false
+    // this.isAnimating = false
     this.increasing = true
     this.timerId = null
     this.done = false
@@ -250,6 +303,16 @@ class Letter {
   get currentOpacity() {
     return this._currentOpacity.toFixed(2)
   }
+  get isAnimating() {
+    if (this.currentMinOpacity === 1) {
+      return false
+    } else if (this.currentMinOpacity === this.currentOpacity) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   setOpacityLimits() {
     // this.increasing = true // set here it here because this should be called at the begining of each animationz
     console.log("setting opacity limits")
@@ -263,14 +326,14 @@ class Letter {
       // console.log(this.currentMaxOpacity)
     }
     if (this.currentMinOpacity === 1) {
+      console.log("done=true in setOpacityLimits()")
       this.done = true
     }
-   
+
   }
 
   increaseOpacity() {
     // console.log("increaseOpacity()")
-  
     this._currentOpacity += 0.01
     this.letter.style.opacity = this.currentOpacity.toString()
   }
@@ -281,61 +344,93 @@ class Letter {
     this.letter.style.opacity = this.currentOpacity.toString()
   }
 
-  increaseStep(){
+  increaseStep() {
     // console.log(`currentMaxOpacity: ${this.currentMaxOpacity} \n currentOpacity: ${this.currentOpacity}`)
-      if (this.currentMaxOpacity === this.currentOpacity) {
-        // console.log("increasing brightness max hit")
-        this.increasing = false
-      } else if (this.currentOpacity < this.currentMaxOpacity) {
-        this.increaseOpacity()
-      }
+    if (this.currentMaxOpacity === this.currentOpacity) {
+      // console.log("increasing brightness max hit")
+      this.increasing = false
+    } else if (this.currentOpacity < this.currentMaxOpacity) {
+      this.increaseOpacity()
+    }
   }
-  decreaseStep(){
+  decreaseStep() {
     // console.log("decreasing")
     // console.log(`currentMinOpacity: ${this.currentMinOpacity} \n currentOpacity: ${this.currentOpacity}`)
 
-      if (this.currentMinOpacity === this.currentOpacity) {
-        this.isAnimating = false
-      } else if (this.currentOpacity > this.currentMinOpacity) {
-        this.decreaseOpacity()
-        
-      }
+    if (this.currentMinOpacity === this.currentOpacity) {
+      // this.isAnimating = false
+    } else if (this.currentOpacity > this.currentMinOpacity) {
+      this.decreaseOpacity()
+
+    }
+  }
+  clearTimer() {
+    clearInterval(this.timerId)
+    this.timerId = null
+  }
+  startTimer() {
+    this.timerId = setInterval(this.transition.bind(this), 10)
   }
 
   transition() {
     // console.log("this.isAnimating: " + this.isAnimating)
-
-    if (this.isAnimating) {
-
-      if(this.increasing){
-        this.increaseStep()
-      } else {
-        // console.log("increasing = false")
-        this.decreaseStep()
-      }
- 
-    } else {
-      console.log("animation cleared")
-      console.log(
-        `isAnimating: ${this.isAnimating} \n 
-        isIncreasing: ${this.increasing} \n
-        currentMin: ${this.currentMinOpacity} \n
-        currentMax: ${this.currentMaxOpacity} \n
-        
-        `)
-      this.timerId = clearInterval(this.timerId)
-      if(this.currentMinOpacity === 1){
-        console.log("IT'S DONE")
-        this.done = true
-      }
+    // this.isAnimating = true
+    this.setOpacityLimits()
+    if (this.increasing) {
+      this.increaseStep()
+    } else if (!this.increasing) {
+      console.log("decreasing value")
+      this.decreaseStep()
     }
+
+    if (!this.isAnimating) {
+      this.clearTimer()
+      console.log("!isAnimating")
+    }
+    // if (this.isAnimating) {
+    //   if (this.increasing) {
+    //     this.increaseStep()
+    //   } else {
+    //     // console.log("increasing = false")
+    //     this.decreaseStep()
+    //   }
+
+    // } else {
+    //   // clearInterval(this.timerId)
+    //   this.clearTimer()
+    //   // console.log("animation cleared")
+    //   // console.log(
+    //   //   `isAnimating: ${this.isAnimating} \n 
+    //   //   isIncreasing: ${this.increasing} \n
+    //   //   currentMin: ${this.currentMinOpacity} \n
+    //   //   currentMax: ${this.currentMaxOpacity} \n
+    //   //   timerId: ${this.timerId}
+
+    //   //   `)
+    //   // this.timerId = clearInterval(this.timerId)
+    //   if (this.currentMinOpacity === 1) {
+    //     console.log("IT'S DONE")
+    //     this.done = true
+    //   }
+    // }
   }
+
 
   animate() {
     // TODO: Make this not animate white space
-    this.isAnimating = true
+    // TODO: figure out why it won't clear intervalId
+    // TODO: look into doing this with promises?
+    // this.isAnimating = true
     this.setOpacityLimits()
-    this.timerId = setInterval(this.transition.bind(this), 10)
+    this.timerId = setInterval(this.transition.bind(this), 100)
+    console.log("timerId: ")
+    console.log(this.timerId)
+    // this.startTimer()
+    console.log("animate isAnimating: " + this.isAnimating)
+    if (this.isAnimating === false) {
+      console.log("isAnimating=false tripped in animate()")
+      // clearInterval(this.timerId)
+    }
     // this.timerId = clearInterval(this.timerId)
     // console.log(`currentMaxOpacity: ${this.currentMaxOpacity} \n currentOpacity: ${this.currentOpacity}`)
     // console.log(`currentMinOpacity: ${this.currentMinOpacity} \n currentOpacity: ${this.currentOpacity}`)
@@ -365,7 +460,7 @@ class BackgroundTextAnimationController {
       l.setAttribute("class", "letter")
       l.innerText = bgText[i]
       l.style.opacity = "0"
-      let letter = new Letter(l)
+      let letter = new BetterLetter(l)
       bgTextContainer.appendChild(l)
       letters.push(letter)
     }
@@ -391,7 +486,7 @@ class BackgroundTextAnimationController {
     //   letter.animate()
     // }
     letter.animate()
-    if(letter.done){
+    if (letter.done) {
       console.log("popping off the letter")
       this.letters.splice(letterPos, 1) // remove the letter if it has no more animations
     }
@@ -570,12 +665,12 @@ const BgTextController = new BackgroundTextAnimationController("text-container",
 // console.log("bgTextController")
 let selectedLetter = BgTextController.selectLetter()
 let letter = BgTextController.letters[selectedLetter]
-console.log("letter: ")
-console.log(letter)
-// letter.animate()
-// function testAnimation() {
-//   BgTextController.animateLetter()
-// }
-let testId = setInterval(letter.animate.bind(letter), 100)
+// console.log("letter: ")
+// console.log(letter)
+letter.animate()
+function testAnimation() {
+  BgTextController.animateLetter()
+}
+// let testId = setInterval(letter.animate.bind(letter), 100)
 // testAnimation()
 // animateLetter()
