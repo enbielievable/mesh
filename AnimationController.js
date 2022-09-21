@@ -2,62 +2,62 @@ const imgData = [
   {
     imgSrc: "assets/lichens/1 CF012159c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012159_no background.png",
-    title: ""
+    title: "Cladonia fimbriata, Black Mountains, South Wales, 011111100110111101000010"
   },
   {
     imgSrc: "assets/lichens/2 CF012203c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012203_no background.png",
-    title: ""
+    title: "Ramalina fastigiata, Pentyrch Woodland, South Wales, 011110100111010101011110"
   },
   {
     imgSrc: "assets/lichens/3 CF012137c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012137_no background.png",
-    title: ""
+    title: "Flavoparmelia caperata, Wenallt Forest, South Wales, 011110110111110001100111"
   },
   {
     imgSrc: "assets/lichens/4 CF012173c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012173_no background.png",
-    title: ""
+    title: "Xanthoria parietina, Gower, South Wales, 110011101001010000000000"
   },
   {
     imgSrc: "assets/lichens/5 CF012123c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012123_no background.png",
-    title: ""
+    title: "Hypogymnia physodes, Balck Mountains, South Wales, 010100110101011101000001"
   },
   {
     imgSrc: "assets/lichens/6 CF012167c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012167_no background.png",
-    title: ""
+    title: "Squamarina cartilaginea, Gower, South Wales, 100110001000101001101011"
   },
   {
     imgSrc: "assets/lichens/7 CF012178c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012178_no background.png",
-    title: ""
+    title: "Parmotrema perlatum, Bute Park, South Wales, 100001101000100101101111"
   },
   {
     imgSrc: "assets/lichens/8 CF012126c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012126_no background.png",
-    title: ""
+    title: "Peltigera membranacea, Black Mountains, South Wales, 110011011011000110100110"
   },
   {
     imgSrc: "assets/lichens/9 CF012155c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012155_no background.png",
-    title: ""
+    title: "Cladonia portentosa, Western Valleys, South Wales, 110000011011011010011010"
   },
   {
     imgSrc: "assets/lichens/10 CF012208c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012208_no background.png",
-    title: ""
+    title: "Evernia prunastri, Wenallt Forest, South Wales, 101000001001111010000011"
   },
   {
     imgSrc: "assets/lichens/11 CF012186c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012186_no background.png",
-    title: ""
+    title: "Ramalina farinacea, Black Mountains, South Wales, 100000010111111101101011"
   },
   {
     imgSrc: "assets/lichens/12 CF012130c28x20bitmap100_RGB.png",
     imgNoBg: "assets/noBg/CF012130_no background.png",
-    title: ""
+    title: "Usnea articulata, Wenallt Forest, South Wales, 010110110101110001001010"
   },
 ]
 
@@ -133,14 +133,8 @@ function AnimationElementsFactory(data, container) {
   console.log(maxWidth)
 
 
-  function createModalContent(imgSrc, modalId,) {
-    // TODO: Make the modal image open centered, and scaled to fit in the window.
-    //       I think whatever is making this not open centered is also what is causing the mesh logo to not center.
-    // modalData.id   Gotten from place in the array
-    // modalData.imgSrc
-    // modalData.imgNoBg
+  function createModalContent(imgSrc, modalId, title) {
     let modal = document.createElement("div")
-    // let modalId = "m" + id
     modal.setAttribute("class", "modal")
     modal.setAttribute("id", modalId)
 
@@ -160,22 +154,20 @@ function AnimationElementsFactory(data, container) {
     }
     // Add close button to modal
     modalContent.appendChild(modalClose)
-
+    
     // Modal Image
-    // let imgWrapper = document.createElement("div")
-    // imgWrapper.setAttribute("class", "modal-img-wrapper")
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
-    // imgWrapper.appendChild(modalImg)
-    // modalContent.appendChild(imgWrapper)
     modalContent.appendChild(modalImg)
-    modal.appendChild(modalContent)
+    
     // Image title
-    // let modalText = document.createElement("p")
-    // // TODO: make it get this info from elementData
-    // modalText.appendChild(document.createTextNode("Yada yada"))
-    // modalContent.appendChild(modalText)
+    let modalText = document.createElement("p")
+    modalText.setAttribute("class", "modal-text")
+    modalText.innerHTML = title
+    modalContent.appendChild(modalText)
+
+    modal.appendChild(modalContent)
     return modal
   }
 
@@ -183,6 +175,7 @@ function AnimationElementsFactory(data, container) {
   function createAnimationElement(data, id) {
     // data.imgSrc -> the src to the image with a background
     // data.imgNoBg -> src of image with no background
+    // data.title -> tittle of the image
 
     // TODO: add images and onclicks to be assigned here
     // let randomPos = getRandomPosition(maxHeight, maxWidth)
@@ -201,7 +194,7 @@ function AnimationElementsFactory(data, container) {
       modal.style.display = "block"
     }
     let modalId = "m" + id
-    let modal = createModalContent(data.imgSrc, modalId)
+    let modal = createModalContent(data.imgSrc, modalId, data.title)
     // console.log("modal: ")
     // console.log(modal)
     // console.log("***")
@@ -391,7 +384,7 @@ function getRandomInt(max) {
 }
 
 
-initialAnimation()
+// initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)
