@@ -71,7 +71,7 @@ class Letter {
     console.log("increaseOpacity triggered")
     if(this.currentOpacity < 1){
       // NOTE: Opacity increase amount
-      this._currentOpacity += 0.05
+      this._currentOpacity += 0.1
       this.letter.style.opacity = this.currentOpacity.toString()
     } else {
       this.done = true
@@ -174,7 +174,7 @@ const mouseMoveHandler = function (event) {
   if (mouseDown) {
     // Generate a numbet o highlight background text.
     let rNumber = getRandomInt(100) + 1
-    if (rNumber <= 10) {
+    if (rNumber <= 100) {
       // 10% chance to increase a letter opacity
       BgTextController.increaseRandomLetterOpacity()
     }

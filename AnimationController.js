@@ -391,15 +391,8 @@ function getRandomInt(max) {
 }
 
 
-// initialAnimation()
+initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)
 AnimationHandler.animate()
-
-
-// const BgTextController = new BackgroundTextAnimationController("text-container", "bg-text")
-// console.log("bgTextController")
-
-// setInterval(BgTextController.increaseRandomLetterOpacity.bind(BgTextController), 100)
-
