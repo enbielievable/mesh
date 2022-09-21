@@ -233,118 +233,169 @@ function AnimationElementsFactory(data, container) {
 class Letter {
   constructor(letter) {
     this.letter = letter // span containing a litter
-    this.currentOpacity = 0
-    this.currentMaxOpacity = 0
-    this.currentMinOpacity = 0
+    this._currentOpacity = 0
+    this._currentMaxOpacity = 0
+    this._currentMinOpacity = 0
     this.isAnimating = false
-    this.increasing = false
+    this.increasing = true
     this.timerId = null
+    this.done = false
+  }
+  get currentMaxOpacity() {
+    return this._currentMaxOpacity.toFixed(2)
+  }
+  get currentMinOpacity() {
+    return this._currentMinOpacity.toFixed(2)
+  }
+  get currentOpacity() {
+    return this._currentOpacity.toFixed(2)
   }
   setOpacityLimits() {
+    // this.increasing = true // set here it here because this should be called at the begining of each animationz
+    console.log("setting opacity limits")
     if (this.currentMinOpacity < 1) {
-      this.currentMinOpacity += 0.05
-      if (this.currentMinOpacity * 2 < 1) {
-        this.currentMaxOpacity += 0.1
+      // console.log("increasing minimum opacity")
+      this._currentMinOpacity += 0.05
+    }
+    if (this.currentMaxOpacity < 1) {
+      // console.log("increasing max opacity")
+      this._currentMaxOpacity += 0.1
+      // console.log(this.currentMaxOpacity)
+    }
+    if (this.currentMinOpacity === 1) {
+      this.done = true
+    }
+   
+  }
+
+  increaseOpacity() {
+    // console.log("increaseOpacity()")
+  
+    this._currentOpacity += 0.01
+    this.letter.style.opacity = this.currentOpacity.toString()
+  }
+
+  decreaseOpacity() {
+    // console.log("decreaseOpacity")
+    this._currentOpacity -= 0.01
+    this.letter.style.opacity = this.currentOpacity.toString()
+  }
+
+  increaseStep(){
+    // console.log(`currentMaxOpacity: ${this.currentMaxOpacity} \n currentOpacity: ${this.currentOpacity}`)
+      if (this.currentMaxOpacity === this.currentOpacity) {
+        // console.log("increasing brightness max hit")
+        this.increasing = false
+      } else if (this.currentOpacity < this.currentMaxOpacity) {
+        this.increaseOpacity()
+      }
+  }
+  decreaseStep(){
+    // console.log("decreasing")
+    // console.log(`currentMinOpacity: ${this.currentMinOpacity} \n currentOpacity: ${this.currentOpacity}`)
+
+      if (this.currentMinOpacity === this.currentOpacity) {
+        this.isAnimating = false
+      } else if (this.currentOpacity > this.currentMinOpacity) {
+        this.decreaseOpacity()
+        
+      }
+  }
+
+  transition() {
+    // console.log("this.isAnimating: " + this.isAnimating)
+
+    if (this.isAnimating) {
+
+      if(this.increasing){
+        this.increaseStep()
+      } else {
+        // console.log("increasing = false")
+        this.decreaseStep()
+      }
+ 
+    } else {
+      console.log("animation cleared")
+      console.log(
+        `isAnimating: ${this.isAnimating} \n 
+        isIncreasing: ${this.increasing} \n
+        currentMin: ${this.currentMinOpacity} \n
+        currentMax: ${this.currentMaxOpacity} \n
+        
+        `)
+      this.timerId = clearInterval(this.timerId)
+      if(this.currentMinOpacity === 1){
+        console.log("IT'S DONE")
+        this.done = true
       }
     }
   }
 
-  increaseOpacity() {
-    let opacityIncriment = this.currentOpacity + 0.01
-    this.letter.style.opacity = opacityIncriment.toString()
-  }
-  decreaseOpacity() {
-    let opacityIncriment = this.currentOpacity - 0.01
-    this.letter.style.opacity = opacityIncriment.toString()
-  }
-  animationStep() {
-     // set the flag that this element is animating
-     // Increase currentMaxOpacity and currentMinOpacity
-    while (this.currentOpacity < this.currentMaxOpacity) {
-      // After this is done will it just move on?
-      this.increaseOpacity()
-    }
-    while (this.currentOpacity > this.currentMinOpacity) {
-      this.decreaseOpacity()
-    }
-  }
-
   animate() {
+    // TODO: Make this not animate white space
     this.isAnimating = true
     this.setOpacityLimits()
-    this.timerId = setInterval(this.animationStep, 10)
-    clearInterval(this.timerId)
-    this.isanimating = false
+    this.timerId = setInterval(this.transition.bind(this), 10)
+    // this.timerId = clearInterval(this.timerId)
+    // console.log(`currentMaxOpacity: ${this.currentMaxOpacity} \n currentOpacity: ${this.currentOpacity}`)
+    // console.log(`currentMinOpacity: ${this.currentMinOpacity} \n currentOpacity: ${this.currentOpacity}`)
+
   }
-
-
 }
 
 
 class BackgroundTextAnimationController {
-  // TODO: Add the fade animation?
   // TODO: Center the text in the middle of the view
   constructor(textContainerId, textElementId) {
     this.textContainerId = textContainerId
     this.textElementId = textElementId
-    // I might need to change this to a list of classes because i need extra data
-    // like how many times it's faded
     this.letters = this.separateText()
-    this.letterInfo = Array(this.letters.childElementCount).fill(0)
-    console.log("this.letterInfo")
-    console.log(this.letterInfo)
-    // console.log(this.letters)
+
   }
   separateText() {
+    // Letter Factory
     // This function separates the background text into their own elements so they can idividually be altered
     let bgTextP = document.getElementById(this.textElementId)
     let bgText = bgTextP.innerHTML
     let bgTextContainer = document.getElementById(this.textContainerId)
+    let letters = []
     for (let i = 0; i < bgText.length; i++) {
       // console.log("in the loop")
       let l = document.createElement("span")
       l.setAttribute("class", "letter")
       l.innerText = bgText[i]
       l.style.opacity = "0"
+      let letter = new Letter(l)
       bgTextContainer.appendChild(l)
+      letters.push(letter)
     }
     bgTextP.remove()
-    return bgTextContainer
+    // return bgTextContainer
+    return letters
   }
+
+
   selectLetter() {
-    const count = this.letters.childElementCount
+    const count = this.letters.length
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
     return getRandomInt(count)
   }
-  // animationStep() {
-  //   console.log("animation Stepped")
-  //   const selectedNumber = this.selectLetter()
-  //   let letterInfo = this.letterInfo[selectedNumber]
-  //   if (letterInfo < 1) {
-  //     // console.log("selectedNumber")
-  //     // console.log(selectedNumber)
-  //     const letter = this.letters.children[selectedNumber] // Randomly select a letter
-  //     // console.log("letter")
-  //     // console.log(letter)
-  //     // console.log("letterInfo")
-  //     // console.log(letterInfo)
-  //     let opacity = letterInfo + 0.1
-  //     this.letterInfo[selectedNumber] += 0.1
-  //     // console.log("opacity")
-  //     // console.log(opacity)
-  //     letter.style.opacity = opacity.toString()
-  //     // console.log("letter opacity")
-  //     // console.log(letter.style.opacity)
-  //   }
-  // }
-  
-  // TODO: make this a function to trigger the animations
-  
 
 
-
+  animateLetter() {
+    let letterPos = this.selectLetter()
+    let letter = this.letters[1]
+    // if(!letter.isAnimating && !letter.done){
+    //   letter.animate()
+    // }
+    letter.animate()
+    if(letter.done){
+      console.log("popping off the letter")
+      this.letters.splice(letterPos, 1) // remove the letter if it has no more animations
+    }
+  }
 }
 
 
@@ -503,20 +554,28 @@ const bgTextElement = document.getElementById("bg-text")
 console.log(bgTextElement)
 
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 
-
-initialAnimation()
+// initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)
 AnimationHandler.animate()
 
 
-// const BgTextController = new BackgroundTextAnimationController("text-container", "bg-text")
-// let c = 0
-// while (c < 1000) {
-//   console.log("while loop")
-//   BgTextController.animationStep()
-//   c += 1
+const BgTextController = new BackgroundTextAnimationController("text-container", "bg-text")
+// console.log("bgTextController")
+let selectedLetter = BgTextController.selectLetter()
+let letter = BgTextController.letters[selectedLetter]
+console.log("letter: ")
+console.log(letter)
+// letter.animate()
+// function testAnimation() {
+//   BgTextController.animateLetter()
 // }
+let testId = setInterval(letter.animate.bind(letter), 100)
+// testAnimation()
+// animateLetter()
