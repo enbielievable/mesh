@@ -138,3 +138,26 @@
 .letter {
   justify-content: center;
 }
+
+.article-button{
+  position:fixed;
+  align-self: flex-start;
+  color: white;
+  font-size: 50px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+#article-button{}
+
+.article-container {
+  display: none;
+  position: fixed;
+  background-color: white;
+  z-index: 2;
+}
+
+.article {
+  display: none;
+}
+.article-text {}

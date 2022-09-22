@@ -375,6 +375,86 @@ class AnimationEntity {
 
 }
 
+
+const articleParent = document.getElementById("article-wrapper")
+const articleButton = document.getElementById("article-button")
+const articleContainer = document.getElementById("article-container")
+const articleClose = document.getElementById("close-articles")
+
+
+const articleButtonLeft = document.getElementById("button-left")
+const articleButtonRight = document.getElementById("button-right")
+let currentArticle = 0
+
+function openArticles() {
+  articleContainer.style.display = "block"
+  articleParent.style.display = "block"
+  articleParent.children[currentArticle].style.display = "block"
+}
+function closeArticles () {
+  articleContainer.style.display = "none"
+  articleParent.style.display = "none"
+  articleParent.children[currentArticle].style.display = "none"
+}
+
+
+function leftButton() {
+  // Hide current article
+  console.log(`currentArticle: ${currentArticle}`)
+  articleParent.children[currentArticle].style.display = "none"
+  if(currentArticle === 0){
+    currentArticle = articleParent.childElementCount - 1 // This should be right?
+  } else {
+    currentArticle -= 1
+  }
+  articleParent.children[currentArticle].style.display = "block"
+}
+
+function rightButton() {
+  articleParent.children[currentArticle].style.display = "none"
+  if(currentArticle === articleParent.childElementCount -1 ) {
+    currentArticle = 0
+  } else {
+    currentArticle += 1
+  }
+  articleParent.childrenf[currentArticle].style.display = "block"
+}
+
+articleButtonLeft.onclick = leftButton
+articleButtonRight.onclick = rightButton
+articleButton.onclick = openArticles
+articleClose.onclick = closeArticles
+// articleButtonLeft.onclick = function () {
+//   console.log("currentArticle on left click: " + currentArticle)
+//     document.getElementById(`article-${currentArticle}`).style.display = "none"
+//     currentArticle -= 1
+//     document.getElementById(`article-${currentArticle}`).style.display = "block"
+//     if(currentArticle != 0 ){
+//       articleButtonLeft.style.opacity = "1"
+//       articleButton.removeAttribute("disabled")
+//     }
+//     if(currentArticle === 0) {
+//       articleButtonLeft.style.opacity = "0.5"
+//       articleButtonLeft.setAttribute("disabled", "")
+//     }
+// }
+
+// articleButtonRight.onclick = function () {
+//   document.getElementById(`article-${currentArticle}`).style.display = "none"
+//   currentArticle += 1
+//   document.getElementById(`article-${currentArticle}`).style.display = "block"
+//   if(currentArticle != 2){
+//     articleButtonRight.style.opacity = "1"
+//     articleButtonLeft.removeAttribute("disabled")
+//   }
+//   if(currentArticle = 2) {
+//     articleButtonRight.style.opacity = "0.5"
+//     articleButtonRight.setAttribute("disabled", "")
+//   }
+// }
+
+
+
 const bgTextElement = document.getElementById("bg-text")
 console.log(bgTextElement)
 
