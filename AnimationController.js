@@ -379,11 +379,10 @@ class AnimationEntity {
 const articleParent = document.getElementById("article-wrapper")
 const articleButton = document.getElementById("article-button")
 const articleContainer = document.getElementById("article-container")
-const articleClose = document.getElementById("close-articles")
 
-
-const articleButtonLeft = document.getElementById("button-left")
-const articleButtonRight = document.getElementById("button-right")
+// const articleClose = document.getElementById("close-articles")
+// const articleButtonLeft = document.getElementById("button-left")
+// const articleButtonRight = document.getElementById("button-right")
 let currentArticle = 0
 
 function openArticles() {
@@ -398,7 +397,7 @@ function closeArticles () {
 }
 
 
-function leftButton() {
+function leftButtonOnClick() {
   // Hide current article
   console.log(`currentArticle: ${currentArticle}`)
   articleParent.children[currentArticle].style.display = "none"
@@ -410,48 +409,42 @@ function leftButton() {
   articleParent.children[currentArticle].style.display = "block"
 }
 
-function rightButton() {
+function rightButtonOnClick() {
+  console.log(`currentArticle: ${currentArticle}`)
   articleParent.children[currentArticle].style.display = "none"
   if(currentArticle === articleParent.childElementCount -1 ) {
     currentArticle = 0
   } else {
     currentArticle += 1
   }
-  articleParent.childrenf[currentArticle].style.display = "block"
+  articleParent.children[currentArticle].style.display = "block"
 }
 
-articleButtonLeft.onclick = leftButton
-articleButtonRight.onclick = rightButton
-articleButton.onclick = openArticles
-articleClose.onclick = closeArticles
-// articleButtonLeft.onclick = function () {
-//   console.log("currentArticle on left click: " + currentArticle)
-//     document.getElementById(`article-${currentArticle}`).style.display = "none"
-//     currentArticle -= 1
-//     document.getElementById(`article-${currentArticle}`).style.display = "block"
-//     if(currentArticle != 0 ){
-//       articleButtonLeft.style.opacity = "1"
-//       articleButton.removeAttribute("disabled")
-//     }
-//     if(currentArticle === 0) {
-//       articleButtonLeft.style.opacity = "0.5"
-//       articleButtonLeft.setAttribute("disabled", "")
-//     }
-// }
+// articleButtonLeft.onclick = leftButton
+// articleButtonRight.onclick = rightButton
+// articleClose.onclick = closeArticles
+const leftButtons = document.getElementsByClassName("button-left")
+const rightButtons = document.getElementsByClassName("button-right")
+const articleCloseButtons = document.getElementsByClassName("close-articles")
 
-// articleButtonRight.onclick = function () {
-//   document.getElementById(`article-${currentArticle}`).style.display = "none"
-//   currentArticle += 1
-//   document.getElementById(`article-${currentArticle}`).style.display = "block"
-//   if(currentArticle != 2){
-//     articleButtonRight.style.opacity = "1"
-//     articleButtonLeft.removeAttribute("disabled")
-//   }
-//   if(currentArticle = 2) {
-//     articleButtonRight.style.opacity = "0.5"
-//     articleButtonRight.setAttribute("disabled", "")
-//   }
-// }
+console.log("rightButtons")
+console.log(rightButtons)
+console.log("leftButtons")
+console.log(leftButtons)
+
+function addOnClicks(elements, onclick){
+  console.log("addOnClicks() called")
+  for(let i = 0; i < elements.length; i++) {
+    elements[i].onclick = onclick
+    console.log("adding onclick to: ")
+    console.log(elements[i])
+  }
+}
+addOnClicks(leftButtons, leftButtonOnClick)
+addOnClicks(rightButtons, rightButtonOnClick)
+addOnClicks(articleCloseButtons, closeArticles)
+
+articleButton.onclick = openArticles
 
 
 
@@ -464,7 +457,7 @@ function getRandomInt(max) {
 }
 
 
-// initialAnimation()
+initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)

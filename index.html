@@ -12,15 +12,22 @@
 
     <div class="view example prevent-select" id="view">
         <div class="article-button">
-            <span id="article-button">☰<span>
-                    <!-- <button id="article-button" type="button">☰</button> -->
+            <!-- <span id="article-button">☰<span> -->
+            <button class="button" id="article-button" type="button">☰</button>
         </div>
         <div class="article-container" id="article-container">
-            <button id="close-articles" type="button">✖</button>
-            <div id="article-wrapper">
+            <!-- <button class="close" id="close-articles" type="button">✖</button> -->
+            <div class="article-wraper" id="article-wrapper">
                 <article id="article-0" class="article">
                     <!-- Holds the text -->
-                    <p class="article-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                    <div class="close-article-wrapper">
+                        <button class="button close close-articles" type="button">✖</button>
+                        <!-- <span class="close close-articles">✖</span> -->
+                    </div>
+                    <!-- <span class="close close-articles">✖</span> -->
+
+                    <p class="article-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+                        ligula eget dolor.
                         Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
                         mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
                         quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,
@@ -50,9 +57,34 @@
                         tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum
                         primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis
                         porttitor congue, elit erat euismod orci, ac </p>
+
+                    <div class="arrows">
+                        <button class="button button-left">🠸</button>
+                        <button class="button button-right">🠺</button>
+                    </div>
                 </article>
+
+                <article id="article-2" class="article">
+                    <!-- <button class="close close-articles" type="button">✖</button> -->
+                    <div class="close-article-wrapper">
+                        <button class="button close close-articles" type="button">✖</button>
+                    </div>
+                    <div class="article-img-wrapper">
+                        <img src="assets/negatives/DSCF0781_neg.png" class="article-img">
+                    </div>
+                    <div class="arrows">
+                        <button class="button button-left">🠸</button>
+                        <button class="button button-right">🠺</button>
+                    </div>
+                </article>
+
                 <article id="article-1" class="article">
-                    <p class="article-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                    <!-- <button class="close close-articles" type="button">✖</button> -->
+                    <div class="close-article-wrapper">
+                        <button class="button close close-articles" type="button">✖</button>
+                    </div>
+                    <p class="article-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                        doloremque laudantium,
                         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
                         dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
                         fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
@@ -82,15 +114,17 @@
                         dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio
                         dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
                         et quas molestias</p>
+                    <div class="arrows">
+                        <button class="button button-left">🠸</button>
+                        <button class=" button button-right">🠺</button>
+                    </div>
                 </article>
-                <article id="article-2" class="article">
-                    <p>yada yada</p>
-                </article>
+
             </div>
-            <div class="arrows">
+            <!-- <div class="arrows">
                 <button id="button-left">🠸</button>
                 <button id="button-right">🠺</button>
-            </div>
+            </div> -->
         </div>
         <div class="logo-img" id="mesh-logo"></div>
         <div class="background-text-container" id="text-container">

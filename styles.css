@@ -73,8 +73,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
+  /* background-color: rgb(0, 0, 0); */
   
   
 }
@@ -140,24 +139,103 @@
 }
 
 .article-button{
+  /* text-decoration: none;
+  border: none;
+  background: none; */
+  /* font-size: 100px; */
   position:fixed;
   align-self: flex-start;
-  color: white;
-  font-size: 50px;
-  margin-left: 10px;
+  /* color: white; */
+  /* font-size: 100px; */
+  /* margin-left: 10px; */
   z-index: 1;
+  /* background-color: #000000; */
 }
 
+.button {
+  font-weight: bold; 
+  border: none;
+  color: white;
+  background-color: rgb(27, 27, 27);
+  /* padding: 15px 32px; */
+  /* font-size: 72px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 32px;
+  /* margin: 4px 2px; */
+  cursor: pointer;
+}
+
+.button-left{
+    padding: 15px 32px;
+
+  font-size: 48px;
+}
+.button-right {
+  padding: 15px 32px;
+  font-size: 48px;
+}
 #article-button{}
 
 .article-container {
+
   display: none;
   position: fixed;
-  background-color: white;
+  /* background-color: white; */
   z-index: 2;
+  width: 100%;
+  /* height: 100%; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* align-items: ; */
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  /* background-color: black; */
+  /* justify-content: center; */
 }
-
+.article-wrapper {
+  /* height: 100%; */
+  display: flex;
+  /* flex-direction: column;
+  justify-content: center; */
+  margin:auto;
+  width: 100%;
+}
 .article {
+  /* justify-content: center; */
+  overflow: scroll;
+  margin: auto;
   display: none;
+  flex-direction: column;
+  height: 100%; 
+  max-width: 750px;
+  text-align: center;
+  background-color: rgb(27, 27, 27);
+  padding: 25px;
+  color: antiquewhite;
+
+}
+.close-articles{
+  /* align-self: flex-start; */
+  /* display: flex; */
+  align-self: flex-end;
+  /* float:right; */
+  /* width: 100%; */
+}
+.close-article-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.article-img-wrapper{
+  width:100%;
+}
+.article-img{
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+
 }
 .article-text {}
