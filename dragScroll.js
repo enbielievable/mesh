@@ -18,8 +18,8 @@ let body = document.getElementById("body")
 let viewHeight = innerHeight - 25
 let viewWidth = body.clientWidth - 25
 // scrollArea size
-let maxHeight = viewHeight * 3
-let maxWidth = viewHeight  * 3
+let maxHeight = viewHeight  * 3
+let maxWidth = viewHeight   * 3
 
 // let maxHeight = 750
 // let maxWidth = 750
@@ -191,3 +191,6 @@ const mouseMoveHandler = function (event) {
 ele.addEventListener("mousedown", mouseDownHandler)
 ele.addEventListener("mouseup", mouseUpHandler)
 ele.addEventListener("mousemove", mouseMoveHandler)
+
+
+
