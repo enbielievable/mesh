@@ -194,6 +194,9 @@ const mouseMoveHandler = function (event) {
 
 }
 
+view.addEventListener("mouseout", () => {
+  mouseDown = false
+})
 ele.addEventListener("mousedown", mouseDownHandler)
 ele.addEventListener("mouseup", mouseUpHandler)
 ele.addEventListener("mousemove", mouseMoveHandler)
