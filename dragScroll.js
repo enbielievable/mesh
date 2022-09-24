@@ -19,7 +19,7 @@ let viewHeight = innerHeight - 25
 let viewWidth = body.clientWidth - 25
 // scrollArea size
 let maxHeight = viewHeight  * 3
-let maxWidth = viewHeight   * 3
+let maxWidth = viewWidth   * 2
 
 // let maxHeight = 750
 // let maxWidth = 750
@@ -51,6 +51,11 @@ view.scrollTop = viewHeight
 //  - The scrollX and scrollY of the element default to 0/0 (top left)
 //  - When the view gets set to the middle, I think it needs to be done with these instead of the window
 
+//TODO: fix this hacky way to set aricle height.
+let articles = document.getElementsByClassName("article")
+for (i = 0; i < articles.length; i++){
+  articles[i].setAttribute("style", `height: ${viewHeight}px;`)
+}
 
 // get scroll area
 // let ele = document.getElementById('container')
@@ -170,14 +175,15 @@ const mouseUpHandler = function (event) {
   pos.y = event.clientY
 }
 
+const scrollHandler = function () {
+  // lastKnownScrollPosition = window.scrollY;
+  setTimeout(BgTextController.increaseRandomLetterOpacity(), 10)
+}
+
+view.addEventListener("scroll", scrollHandler)
+
 const mouseMoveHandler = function (event) {
   if (mouseDown) {
-    // Generate a numbet o highlight background text.
-    let rNumber = getRandomInt(100) + 1
-    if (rNumber <= 100) {
-      // 10% chance to increase a letter opacity
-      BgTextController.increaseRandomLetterOpacity()
-    }
     let dx = event.clientX - pos.mouseX
     let dy = event.clientY - pos.mouseY
     // view.scrollLeft -= (dx / 25)
@@ -188,6 +194,9 @@ const mouseMoveHandler = function (event) {
 
 }
 
+view.addEventListener("mouseout", () => {
+  mouseDown = false
+})
 ele.addEventListener("mousedown", mouseDownHandler)
 ele.addEventListener("mouseup", mouseUpHandler)
 ele.addEventListener("mousemove", mouseMoveHandler)

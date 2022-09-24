@@ -80,26 +80,26 @@
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #000000;
+  background-color: rgb(27, 27, 27);
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   /* width: 100%; */
-  height: 100%;
+  /* height: 100%; */
   border: 1px solid #888;
   flex-direction: column;
 }
 
 .modal-text {
-  color: white;
+  color: antiquewhite;
   text-align: center;
   /* align-self: flex-end; */
 }
 
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: antiquewhite;
   font-size: 28px;
   font-weight: bold; 
   align-self: flex-end;
@@ -107,7 +107,7 @@
 
 .close:hover,
 .close:focus {
-  color: black;
+  color:#888;
   text-decoration: none;
   cursor: pointer;
 }
@@ -122,7 +122,8 @@
   /* height: 100%; */
   width: 100%;
   /* background-color: white; */
-  color: white;
+  color: antiquewhite;
+
   font-size: 32px;
   margin: auto;
   /* margin-left: auto;
@@ -155,8 +156,8 @@
 .button {
   font-weight: bold; 
   border: none;
-  color: white;
-  background-color: rgb(27, 27, 27);
+  color: #aaa;
+    background-color: rgb(27, 27, 27);
   /* padding: 15px 32px; */
   /* font-size: 72px; */
   text-align: center;
@@ -202,24 +203,33 @@
   justify-content: center; */
   margin:auto;
   width: 100%;
+  height: 100%;
+  /* flex-basis:100%; */
 }
 .article {
   /* justify-content: center; */
-  overflow: scroll;
+  /* overflow: auto !important; */
+  overflow: auto;
+  
   margin: auto;
   display: none;
   flex-direction: column;
-  height: 100%; 
+  height: 95% ; 
   max-width: 750px;
   text-align: center;
   background-color: rgb(27, 27, 27);
   padding: 25px;
   color: antiquewhite;
+  z-index: 100;
+  /* flex-basis: auto; */
+  /* overflow-y:scroll; */
 
 }
 .close-articles{
   /* align-self: flex-start; */
   /* display: flex; */
+  color: #aaa;
+
   align-self: flex-end;
   /* float:right; */
   /* width: 100%; */
@@ -228,6 +238,7 @@
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
+  overflow:auto;
 }
 .article-img-wrapper{
   width:100%;
@@ -238,4 +249,31 @@
   height: auto;
 
 }
-.article-text {}
+.article-text {
+}
+
+.negative-button {
+  border-radius: 50%;
+  background-color: #000000;
+  border-color: white;
+  /* text-shadow: 4px red; */
+  /* position: fixed; */
+  padding: 50px;
+  font-size: 72px;
+}
+
+.negative-img {
+ 
+  height: 100%;
+  margin: auto;
+  max-width: 100%;
+ 
+}
+.negative-img-wrap {
+  /* width: 100%; */
+  max-width: 100%; 
+  /* height: 100%; */
+  max-height: 100%;
+  /* object-fit: contain; */
+  /* overflow:hidden; */
+}
