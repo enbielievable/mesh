@@ -80,7 +80,7 @@
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #000000;
+  background-color: rgb(27, 27, 27);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,14 +92,14 @@
 }
 
 .modal-text {
-  color: white;
+  color: antiquewhite;
   text-align: center;
   /* align-self: flex-end; */
 }
 
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: antiquewhite;
   font-size: 28px;
   font-weight: bold; 
   align-self: flex-end;
@@ -107,7 +107,7 @@
 
 .close:hover,
 .close:focus {
-  color: black;
+  color:#888;
   text-decoration: none;
   cursor: pointer;
 }
@@ -122,7 +122,8 @@
   /* height: 100%; */
   width: 100%;
   /* background-color: white; */
-  color: white;
+  color: antiquewhite;
+
   font-size: 32px;
   margin: auto;
   /* margin-left: auto;
@@ -155,8 +156,8 @@
 .button {
   font-weight: bold; 
   border: none;
-  color: white;
-  background-color: rgb(27, 27, 27);
+  color: #aaa;
+    background-color: rgb(27, 27, 27);
   /* padding: 15px 32px; */
   /* font-size: 72px; */
   text-align: center;
@@ -227,6 +228,8 @@
 .close-articles{
   /* align-self: flex-start; */
   /* display: flex; */
+  color: #aaa;
+
   align-self: flex-end;
   /* float:right; */
   /* width: 100%; */

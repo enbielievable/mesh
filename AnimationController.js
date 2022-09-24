@@ -62,6 +62,10 @@ const imgData = [
 ]
 
 
+function getAssetPath (relPath) {
+  return window.location.href + relPath
+}
+
 // TODO: Add some identifier that indicates which elements have been clicked / can be clicked
 // TODO: figure out why when it's not max sized, the mesh logo's display is scewed in a different way.
 
@@ -139,9 +143,10 @@ function AnimationElementsFactory(data, container) {
     let modalContent = document.createElement("div")
     modalContent.setAttribute("class", "modal-content")
     // close button
-    let modalClose = document.createElement("span")
-    modalClose.setAttribute("class", "close")
-    modalClose.appendChild(document.createTextNode('\u2718'))
+    let modalClose = document.createElement("button")
+    // modalClose.setAttribute("class", "close")
+    modalClose.classList.add("close", "button")
+    modalClose.innerText = "✖"
     modalClose.onclick = function () {
       // TODO: make this freeze the background animation?
       // console.log("modalClose activated")
@@ -153,10 +158,14 @@ function AnimationElementsFactory(data, container) {
     modalContent.appendChild(modalClose)
     
     // Modal Image
+    let imgLink = document.createElement("a")
+    // NOTE: this doesn't work when you just open the index.html locally
+    imgLink.setAttribute("href", window.location.href + imgSrc)
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
-    modalContent.appendChild(modalImg)
+    imgLink.appendChild(modalImg)
+    modalContent.appendChild(imgLink)
     
     // Image title
     let modalText = document.createElement("p")
@@ -182,6 +191,7 @@ function AnimationElementsFactory(data, container) {
 
 
     // IMAGE
+    
     let imgTag = document.createElement("img")
     imgTag.setAttribute("src", data.imgNoBg) // TODO: make this a propper object not just info from an array.
     imgTag.setAttribute("class", "image")
@@ -230,11 +240,6 @@ class AnimationController {
   }
 
   animate() {
-    // console.log("Animation() called")
-    // NOTE: doing a separate animate function for each element might help with the render.
-    // TODO: figure out a better way so it doesn't just go to the 4 corners.
-    // TODO: Make the it not so the animated object(s) can't leave the container.
-    // TODO: Move the pos attribute so it is unique to each element. currently they all just fly off the screen.
     let id = null
     let childElements = this.childElements
     clearInterval(id)
@@ -242,16 +247,10 @@ class AnimationController {
     //       and runs better at 32
     id = setInterval(animate, 16)
     function animate() {
-      // TODO: MAKE THIS NOT FEEL LAGGY!!! async functions might actaully work. I think it doesn't complete the loop fast enough. 
-      // TODO: all of this needs to change to target the child class
-
       childElements.forEach(ele => {
-        // console.log(ele)
         if (ele.loopCount === ele.movementData.maxDist) {
           // RESET THE ANIMATION SO IT CHANGES DIRECTION  
-          // console.log("MAX DISTANCE!!!")
           ele.resetLoop()
-
         } else {
           ele.animationStep()
         }
@@ -281,10 +280,7 @@ class AnimationEntity {
     // This has to come after the assignment or it braeks
     this.startTop = this._stripPx(this.element.style.top)
     this.startLeft = this._stripPx(this.element.style.left)
-    //   console.log("parentHeight: " + this._parentHeight)
-    //   console.log("rTop: " + this._getRandomInt(this._parentHeight) + "px")
-    //   console.log("rLeft: " + this._getRandomInt(this._parentWidth) + "px")
-    //   console.log("parentWidth: " + this._parentWidth)
+
   }
 
   resetLoop() {
@@ -296,22 +292,14 @@ class AnimationEntity {
 
   animationStep() {
     this.loopCount++
-
-    // TODO: Make it not call this function every time.
     let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
     let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
-    // console.log(topMove)
     if (topMove > this._parentHeight || topMove <= 0) {
-      // console.log("ITS TO HIGH")
       this.resetLoop()
     }
     if (leftMove > this._parentWidth || leftMove <= 0) {
-      // console.log("it's to over")
       this.resetLoop()
     }
-    // if(topMove >= this._parentHeight || topMove <= 0 || leftmove >= this._parentWidth || leftMove <= 0){
-    //   console.log("Element trying to go out of bounds!!")
-    // }
     this.element.style.top = topMove + "px"
     this.element.style.left = leftMove + "px"
   }
@@ -319,7 +307,7 @@ class AnimationEntity {
 
   _randomMove() {
     // Max distance it can move in one direction before a reroll.
-    let randomInt = this._getRandomInt // TODO: fix shit hacky nonsense
+    let randomInt = this._getRandomInt 
     function posOrNeg() {
       if (randomInt(2) === 0) {
         return "-"
@@ -342,16 +330,13 @@ class AnimationEntity {
   _makePosOrNeg(int, dir) {
     // Takes  a number and either a + or - string
     if (dir === "-") {
-      // console.log(-Math.abs(int))
       return -Math.abs(int)
     } else {
-      // console.log(Math.abs(int))
       return Math.abs(int)
     }
   }
 
   _stripPx(str) {
-    // TODO: add some sort of error checking for this.
     return Number(str.slice(0, -2))
   }
 
@@ -360,9 +345,6 @@ class AnimationEntity {
   }
 
   _getRandomPosition(maxHeight, maxWidth) {
-    // TODO: make this just queery container dimensions?
-    // NOTE: if resized how to handle updating all of the positions
-    //       (?) should i even worry about resizing.
     let loc = {
       top: getRandomInt(maxHeight),
       left: getRandomInt(maxWidth)
@@ -383,22 +365,14 @@ class CustomAnimationEntity extends AnimationEntity {
   }
   animationStep() {
     this.loopCount++
-
-    // TODO: Make it not call this function every time.
     let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
     let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
-    // console.log(topMove)
     if (topMove > this._parentHeight || topMove <= 0) {
-      // console.log("ITS TO HIGH")
       this.resetLoop()
     }
     if (leftMove > this._parentWidth || leftMove <= 0) {
-      // console.log("it's to over")
       this.resetLoop()
     }
-    // if(topMove >= this._parentHeight || topMove <= 0 || leftmove >= this._parentWidth || leftMove <= 0){
-    //   console.log("Element trying to go out of bounds!!")
-    // }
     this.adjustOpacity()
     this.element.style.top = topMove + "px"
     this.element.style.left = leftMove + "px"
@@ -435,9 +409,6 @@ const articleParent = document.getElementById("article-wrapper")
 const articleButton = document.getElementById("article-button")
 const articleContainer = document.getElementById("article-container")
 
-// const articleClose = document.getElementById("close-articles")
-// const articleButtonLeft = document.getElementById("button-left")
-// const articleButtonRight = document.getElementById("button-right")
 let currentArticle = 0
 
 function openArticles() {
@@ -475,9 +446,7 @@ function rightButtonOnClick() {
   articleParent.children[currentArticle].style.display = "block"
 }
 
-// articleButtonLeft.onclick = leftButton
-// articleButtonRight.onclick = rightButton
-// articleClose.onclick = closeArticles
+
 const leftButtons = document.getElementsByClassName("button-left")
 const rightButtons = document.getElementsByClassName("button-right")
 const articleCloseButtons = document.getElementsByClassName("close-articles")
@@ -488,11 +457,8 @@ console.log("leftButtons")
 console.log(leftButtons)
 
 function addOnClicks(elements, onclick){
-  console.log("addOnClicks() called")
   for(let i = 0; i < elements.length; i++) {
     elements[i].onclick = onclick
-    console.log("adding onclick to: ")
-    console.log(elements[i])
   }
 }
 addOnClicks(leftButtons, leftButtonOnClick)
@@ -505,18 +471,6 @@ const xView = document.getElementById("view")
 const xContainer = document.getElementById("container")
 
 
-
-function createNegativeButton() {
-  let button = document.createElement("button")
-  button.setAttribute("id", "negative-modal-button")
-  button.setAttribute("class", "negative-button")
-  xContainer.appendChild(button)
- 
-  // button.innerText = "x"
-  // button.style.top = getRandomInt(xView.style.offsetHeight) + "px"
-  // button.style.left = getRandomInt(xView.style.offsetWidth) + "px"
-}
-// createNegativeButton()
 function createNegativeModal() {
   let modal = document.createElement("div")
   modal.setAttribute("class", "modal")
@@ -528,8 +482,8 @@ function createNegativeModal() {
   modalContent.setAttribute("class", "modal-content")
 
   let modalClose = document.createElement("span")
-  modalClose.setAttribute("class", "close")
-  modalClose.appendChild(document.createTextNode('\u2718'))
+  modalClose.classList.add("close", "button")
+  modalClose.innerText = "✖"
   modalClose.onclick = function () {
     let modal = document.getElementById(modalId)
     modal.style.display = "none"
@@ -541,7 +495,8 @@ function createNegativeModal() {
 
 
 
-
+  let imgLink = document.createElement("a")
+  imgLink.setAttribute("href", window.location.href + "assets/negatives/DSCF0781_neg.png")
   let modalImg = document.createElement("img")
   modalImg.setAttribute("id", "negImg")
   modalImg.setAttribute("src", "assets/negatives/DSCF0781_neg.png")
@@ -568,7 +523,6 @@ const negativeButtonEntity = document.getElementById("negative-modal-button")
 negativeButtonEntity.onclick = dispalyNegativeModal
 
 let negativeImgModal = document.getElementById("negImgWrap")
-// const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.style.offsetHeight, xContainer.style.offsetWidth, negativeButtonEntity)
 
 const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.offsetHeight, xContainer.offsetWidth, negativeButtonEntity)
 
