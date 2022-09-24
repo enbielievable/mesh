@@ -129,9 +129,6 @@ function AnimationElementsFactory(data, container) {
   //       it might in the future.
   let maxHeight = container.offsetHeight // For the child class
   let maxWidth = container.offsetWidth
-  console.log(maxHeight)
-  console.log(maxWidth)
-
 
   function createModalContent(imgSrc, modalId, title) {
     let modal = document.createElement("div")
@@ -330,7 +327,7 @@ class AnimationEntity {
         return "+"
       }
     }
-    let maxDistance = this._getRandomInt(50)
+    let maxDistance = this._getRandomInt(300)
     // if 0 negative if 1 positive.
     let xDirectoion = posOrNeg()
     let yDirection = posOrNeg()
@@ -375,6 +372,64 @@ class AnimationEntity {
 
 }
 
+class CustomAnimationEntity extends AnimationEntity {
+  constructor(parentHeight, parentWidth, element){
+    super(parentHeight, parentWidth, element)
+    this._opacity = 1
+    this.increasing = false
+
+    this.element.style.top = this._getRandomInt(this._parentHeight) + "px"
+    this.element.style.left = this._getRandomInt(this._parentWidth) + "px"
+  }
+  animationStep() {
+    this.loopCount++
+
+    // TODO: Make it not call this function every time.
+    let topMove = this.startTop + this._makePosOrNeg(this.loopCount, this.movementData.yDir)
+    let leftMove = this.startLeft + this._makePosOrNeg(this.loopCount, this.movementData.xDir)
+    // console.log(topMove)
+    if (topMove > this._parentHeight || topMove <= 0) {
+      // console.log("ITS TO HIGH")
+      this.resetLoop()
+    }
+    if (leftMove > this._parentWidth || leftMove <= 0) {
+      // console.log("it's to over")
+      this.resetLoop()
+    }
+    // if(topMove >= this._parentHeight || topMove <= 0 || leftmove >= this._parentWidth || leftMove <= 0){
+    //   console.log("Element trying to go out of bounds!!")
+    // }
+    this.adjustOpacity()
+    this.element.style.top = topMove + "px"
+    this.element.style.left = leftMove + "px"
+  }
+  get opacity() {
+    return this._opacity.toFixed(2)
+  }
+
+  adjustOpacity () {
+    if(this.increasing){
+      if(this.opacity >= 1){
+        this.increasing = false
+        this._opacity -= 0.01
+      } else {
+        this._opacity += 0.01
+      }
+    } else {
+      if(this.opacity <= 0){
+        this.increasing = true
+        this._opacity += 0.01
+      } else {
+        this._opacity -= 0.01
+      }
+    }
+    this.setOpacity()
+  }
+
+setOpacity () {
+  this.element.style.opacity = this.opacity
+}
+}
 
 const articleParent = document.getElementById("article-wrapper")
 const articleButton = document.getElementById("article-button")
@@ -446,7 +501,22 @@ addOnClicks(articleCloseButtons, closeArticles)
 
 articleButton.onclick = openArticles
 
+const xView = document.getElementById("view")
+const xContainer = document.getElementById("container")
 
+
+
+function createNegativeButton() {
+  let button = document.createElement("button")
+  button.setAttribute("id", "negative-modal-button")
+  button.setAttribute("class", "negative-button")
+  xContainer.appendChild(button)
+ 
+  // button.innerText = "x"
+  // button.style.top = getRandomInt(xView.style.offsetHeight) + "px"
+  // button.style.left = getRandomInt(xView.style.offsetWidth) + "px"
+}
+// createNegativeButton()
 function createNegativeModal() {
   let modal = document.createElement("div")
   modal.setAttribute("class", "modal")
@@ -493,12 +563,18 @@ function dispalyNegativeModal () {
   modal.style.display = "block"
 }
 createNegativeModal()
-document.getElementById("negative-modal-button").onclick = dispalyNegativeModal
+
+const negativeButtonEntity = document.getElementById("negative-modal-button")
+negativeButtonEntity.onclick = dispalyNegativeModal
 
 let negativeImgModal = document.getElementById("negImgWrap")
-const xView = document.getElementById("view")
-// negativeImgModal.style.width = xView.style.width
-negativeImgModal.style.height = xView.style.height
+// const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.style.offsetHeight, xContainer.style.offsetWidth, negativeButtonEntity)
+
+const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.offsetHeight, xContainer.offsetWidth, negativeButtonEntity)
+
+// this is important stop deleting it
+negativeImgModal.style.height = xView.style.height 
+
 
 
 function getRandomInt(max) {
@@ -507,8 +583,10 @@ function getRandomInt(max) {
 
 
 
-// initialAnimation()
+initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
+
 let AnimationHandler = new AnimationController(container, animationEntities)
+AnimationHandler.childElements.push(NegativeAnimationEntity)
 AnimationHandler.animate()
