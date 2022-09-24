@@ -447,9 +447,58 @@ addOnClicks(articleCloseButtons, closeArticles)
 articleButton.onclick = openArticles
 
 
+function createNegativeModal() {
+  let modal = document.createElement("div")
+  modal.setAttribute("class", "modal")
+  
+  const modalId = "sm0"
+  modal.setAttribute("id", modalId)
 
-const bgTextElement = document.getElementById("bg-text")
-console.log(bgTextElement)
+  let modalContent = document.createElement("div")
+  modalContent.setAttribute("class", "modal-content")
+
+  let modalClose = document.createElement("span")
+  modalClose.setAttribute("class", "close")
+  modalClose.appendChild(document.createTextNode('\u2718'))
+  modalClose.onclick = function () {
+    let modal = document.getElementById(modalId)
+    modal.style.display = "none"
+  }
+
+  let imgWrapper = document.createElement("div")
+  imgWrapper.setAttribute("class", "negative-img-wrap")
+  imgWrapper.setAttribute("id", "negImgWrap")
+
+
+
+
+  let modalImg = document.createElement("img")
+  modalImg.setAttribute("id", "negImg")
+  modalImg.setAttribute("src", "assets/negatives/DSCF0781_neg.png")
+  modalImg.setAttribute("class", "negative-img")
+
+
+
+  modalContent.appendChild(modalClose)
+
+  imgWrapper.appendChild(modalImg)
+  modalContent.appendChild(imgWrapper)
+  modal.appendChild(modalContent)
+
+  document.getElementById("view").appendChild(modal)
+}
+
+function dispalyNegativeModal () {
+  const modal = document.getElementById("sm0")
+  modal.style.display = "block"
+}
+createNegativeModal()
+document.getElementById("negative-modal-button").onclick = dispalyNegativeModal
+
+let negativeImgModal = document.getElementById("negImgWrap")
+const xView = document.getElementById("view")
+// negativeImgModal.style.width = xView.style.width
+negativeImgModal.style.height = xView.style.height
 
 
 function getRandomInt(max) {
@@ -457,7 +506,8 @@ function getRandomInt(max) {
 }
 
 
-initialAnimation()
+
+// initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 let AnimationHandler = new AnimationController(container, animationEntities)

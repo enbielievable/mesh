@@ -19,7 +19,7 @@ let viewHeight = innerHeight - 25
 let viewWidth = body.clientWidth - 25
 // scrollArea size
 let maxHeight = viewHeight  * 3
-let maxWidth = viewHeight   * 3
+let maxWidth = viewWidth   * 2
 
 // let maxHeight = 750
 // let maxWidth = 750
@@ -51,6 +51,11 @@ view.scrollTop = viewHeight
 //  - The scrollX and scrollY of the element default to 0/0 (top left)
 //  - When the view gets set to the middle, I think it needs to be done with these instead of the window
 
+//TODO: fix this hacky way to set aricle height.
+let articles = document.getElementsByClassName("article")
+for (i = 0; i < articles.length; i++){
+  articles[i].setAttribute("style", `height: ${viewHeight}px;`)
+}
 
 // get scroll area
 // let ele = document.getElementById('container')
@@ -176,6 +181,7 @@ const mouseMoveHandler = function (event) {
     let rNumber = getRandomInt(100) + 1
     if (rNumber <= 100) {
       // 10% chance to increase a letter opacity
+      // TODO: change this so just happens on scroll, and has nothing to do with mousedown.
       BgTextController.increaseRandomLetterOpacity()
     }
     let dx = event.clientX - pos.mouseX
