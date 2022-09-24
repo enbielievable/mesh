@@ -175,15 +175,15 @@ const mouseUpHandler = function (event) {
   pos.y = event.clientY
 }
 
+const scrollHandler = function () {
+  // lastKnownScrollPosition = window.scrollY;
+  setTimeout(BgTextController.increaseRandomLetterOpacity(), 10)
+}
+
+view.addEventListener("scroll", scrollHandler)
+
 const mouseMoveHandler = function (event) {
   if (mouseDown) {
-    // Generate a numbet o highlight background text.
-    let rNumber = getRandomInt(100) + 1
-    if (rNumber <= 100) {
-      // 10% chance to increase a letter opacity
-      // TODO: change this so just happens on scroll, and has nothing to do with mousedown.
-      BgTextController.increaseRandomLetterOpacity()
-    }
     let dx = event.clientX - pos.mouseX
     let dy = event.clientY - pos.mouseY
     // view.scrollLeft -= (dx / 25)
