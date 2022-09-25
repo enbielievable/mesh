@@ -145,7 +145,10 @@ class BackgroundTextAnimationController {
   increaseRandomLetterOpacity(){
     let letterPos = this.selectLetter()
     let selectedLetter = this.letters[letterPos]
+    this.letters[letterPos + 1].increaseOpacity()
+    this.letters[letterPos -1 ].increaseOpacity()
     selectedLetter.increaseOpacity()
+    
     if(selectedLetter.done){
       // remove the letter from the array
       // NOTE: it does not get removed untill it's selected again at max
