@@ -1,5 +1,13 @@
+*{
+  font-family: 'andale-mono-regular', sans-serif;
+}
+
 #body {
   margin: none;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .container {
@@ -256,9 +264,9 @@
   margin: auto;
   display: none;
   flex-direction: column;
-  height: 95%;
+  height: 100%;
   max-width: 750px;
-  text-align: center;
+  text-align: justify;
   background-color: rgb(27, 27, 27);
   padding: 25px;
   color: antiquewhite;
@@ -361,3 +369,39 @@
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 }
+.arrows {
+  text-align: center !important;
+}
+
+/* .popup {
+  position: fixed;
+  background-color: white;
+  height: 500px;
+  width: 500px;
+  z-index: 25;
+} */
+
+ /* The snackbar - position it at the bottom and in the middle of the screen */
+ #snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 5; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  -webkit-animation: fadein 0.75s, fadeout 0.75s 2.5s;
+  animation: fadein 0.75s, fadeout 0.75s 2.5s;
+}
+
+ 

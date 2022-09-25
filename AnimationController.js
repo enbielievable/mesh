@@ -103,15 +103,33 @@ function initialAnimation() {
       fadeCount += 1
     } else {
       meshLogo.style.display = "none"
+      
       // meshLogo.style.opacity = "1"
       // container.style.opacity = "0"
       // console.log("containerOpacity: " + container.style.opacity)
       // console.log("transition done")
 
       clearInterval(transitionId)
-
+      scrollPrompt()
     }
   }
+}
+
+function helperPopup() {
+  const popup = document.createElement("div")
+  popup.setAttribute("id", "p1")
+  popup.classList.add("popup")
+  const close = document.createElement("button")
+  close.classList.add("button", "close")
+  close.onclick = () => {
+    popup.display = "none"
+  }
+  const text = document.createElement("p")
+  text.innerText = "Scroll around"
+  popup.appendChild(close)
+  popup.appendChild(text)
+
+  return popup
 }
 
 function getMiddlePos (){
@@ -597,6 +615,21 @@ function getRandomInt(max) {
 
 
 initialAnimation()
+
+// const popup = helperPopup()
+// xView.appendChild(popup)
+
+function scrollPrompt() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+} 
+
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
 // let randomElements = [
@@ -619,3 +652,4 @@ let AnimationHandler = new AnimationController(container, animationEntities)
 
 AnimationHandler.childElements.push(NegativeAnimationEntity)
 AnimationHandler.animate()
+// scrollPrompt()
