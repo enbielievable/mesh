@@ -308,3 +308,16 @@
   /* object-fit: contain; */
   /* overflow:hidden; */
 }
+
+.author {
+  align-self: flex-end;
+  /* width: 100%; */
+  padding-bottom: 5px;
+}
+.quote {
+  display:flex;
+  flex-direction: column;
+  /* border-bottom-width: 10px; */
+  border-bottom-color: antiquewhite;
+  border-bottom-style: solid;
+}
