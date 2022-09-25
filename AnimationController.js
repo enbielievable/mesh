@@ -195,6 +195,7 @@ function AnimationElementsFactory(data, container) {
     let imgLink = document.createElement("a")
     // NOTE: this doesn't work when you just open the index.html locally
     imgLink.setAttribute("href", window.location.href + imgSrc)
+    imgLink.setAttribute("target", "_blank")
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
@@ -206,6 +207,7 @@ function AnimationElementsFactory(data, container) {
     // Image title
     let modalText = document.createElement("p")
     modalText.setAttribute("class", "modal-text")
+    // modalText.classList.add("modal-text", "rotate")
     modalText.innerHTML = title
     modalContent.appendChild(modalText)
 
@@ -552,6 +554,7 @@ function createNegativeModal() {
 
   let imgLink = document.createElement("a")
   imgLink.setAttribute("href", window.location.href + "assets/negatives/DSCF0781_neg.png")
+  imgLink.setAttribute("target", "_blank")
   let modalImg = document.createElement("img")
   modalImg.setAttribute("id", "negImg")
   modalImg.setAttribute("src", "assets/negatives/DSCF0781_neg.png")
