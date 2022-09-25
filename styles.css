@@ -115,6 +115,7 @@
 .modal-img {
   height: auto;
   margin: auto;
+  width: 100%;
 }
 
 .background-text-container{

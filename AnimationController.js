@@ -134,6 +134,10 @@ function AnimationElementsFactory(data, container) {
   let maxHeight = container.offsetHeight // For the child class
   let maxWidth = container.offsetWidth
 
+  const view = document.getElementById("view")
+  let vHeight = view.offsetHeight
+  let vWidth = view.offsetWidth
+
   function createModalContent(imgSrc, modalId, title) {
     let modal = document.createElement("div")
     modal.setAttribute("class", "modal")
@@ -145,6 +149,7 @@ function AnimationElementsFactory(data, container) {
     // close button
     let modalClose = document.createElement("button")
     // modalClose.setAttribute("class", "close")
+    // modalContent.style.maxWidth = vWidth
     modalClose.classList.add("close", "button")
     modalClose.innerText = "✖"
     modalClose.onclick = function () {
@@ -164,6 +169,8 @@ function AnimationElementsFactory(data, container) {
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
+    modalImg.style.maxWidth = vWidth
+    
     imgLink.appendChild(modalImg)
     modalContent.appendChild(imgLink)
     
