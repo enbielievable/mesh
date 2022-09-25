@@ -114,7 +114,36 @@ function initialAnimation() {
   }
 }
 
+function getMiddlePos (){
+  const container = document.getElementById("container")
+  const view = document.getElementById("view")
+  const halfVHeight = view.offsetHeight / 2
+  const haflVWidth = view.offsetWidth / 2
+  const halfCHeight = container.offsetHeight / 2
+  const halfCWidth = container.offsetWidth / 2
+  let xPosOrNeg = getRandomInt(2)
+  let yPosOrNeg =getRandomInt(2)
+  let posXY = {
+    x: 0,
+    y: 0,
+  }
+  if(xPosOrNeg === 0) {
+    // negative
+    posXY.x = halfCWidth - getRandomInt(haflVWidth)
+  } else if (xPosOrNeg === 1){
+    // positive
+    posXY.x = halfCWidth + getRandomInt(haflVWidth)
+  }
 
+  if(yPosOrNeg === 0){
+    // negative
+    posXY.y = halfCHeight - getRandomInt(halfVHeight)
+  } else if(yPosOrNeg ===1){
+    // positive
+    posXY.y = halfCHeight + getRandomInt(halfVHeight)
+  }
+  return posXY
+}
 
 function AnimationElementsFactory(data, container) {
   // NOTE: I don't know if this should keep a list of elements, or if it should just queery them
@@ -566,7 +595,23 @@ function getRandomInt(max) {
 initialAnimation()
 const container = document.getElementById("container")
 const animationEntities = AnimationElementsFactory(imgData, container)
-
+// let randomElements = [
+//   getRandomInt(animationEntities.length),
+//   getRandomInt(animationEntities.length),
+//   getRandomInt(animationEntities.length)
+// ]
+// randomElements.forEach((i) => {
+//   let position = getMiddlePos()
+//   console.log("random position corrected: ")
+//   console.log(position)
+//   animationEntities[i].element.style.top = position.y
+//   animationEntities[i].element.style.left = position.x
+// })
 let AnimationHandler = new AnimationController(container, animationEntities)
+// Make sure some elements spawn in view
+
+
+
+
 AnimationHandler.childElements.push(NegativeAnimationEntity)
 AnimationHandler.animate()
