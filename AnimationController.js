@@ -369,6 +369,16 @@ class CustomAnimationEntity extends AnimationEntity {
 
     this.element.style.top = this._getRandomInt(this._parentHeight) + "px"
     this.element.style.left = this._getRandomInt(this._parentWidth) + "px"
+
+    // hack for getting the fade to work, the animatin triggers ever 16ms
+    // if opacity doesn't start increasing until it hits -56.25 because only increases at 0.01
+    // it will take 3 (1.5 to get there and 1.5 to get back to 0) minutes to start fading in
+    // and 3.75 for it to display for 6 seconds before it starts to fade.
+
+  
+    this.negativeMax = -56.25 / 2
+    this.posMax = 3.75 
+  
   }
   animationStep() {
     this.loopCount++
@@ -390,14 +400,14 @@ class CustomAnimationEntity extends AnimationEntity {
 
   adjustOpacity () {
     if(this.increasing){
-      if(this.opacity >= 1){
+      if(this.opacity >= this.posMax){
         this.increasing = false
         this._opacity -= 0.01
       } else {
         this._opacity += 0.01
       }
     } else {
-      if(this.opacity <= 0){
+      if(this.opacity <= this.negativeMax){
         this.increasing = true
         this._opacity += 0.01
       } else {
@@ -408,8 +418,16 @@ class CustomAnimationEntity extends AnimationEntity {
   }
 
 setOpacity () {
-  this.element.style.opacity = this.opacity
+  if(this.opacity <= 1 && this.opacity >= 0){
+    this.element.style.opacity = this.opacity
+  } 
+  // if(this.opacity <= 0){
+  //   document.getElementById("nb").disabled = true
+  // } if(this.opacity === 0.01){
+  //   document.getElementById("nb").disabled = false
+  // }
 }
+
 }
 
 const articleParent = document.getElementById("article-wrapper")
@@ -531,7 +549,8 @@ negativeButtonEntity.onclick = dispalyNegativeModal
 
 let negativeImgModal = document.getElementById("negImgWrap")
 
-const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.offsetHeight, xContainer.offsetWidth, negativeButtonEntity)
+// const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.offsetHeight, xContainer.offsetWidth, negativeButtonEntity)
+const NegativeAnimationEntity = new CustomAnimationEntity(xView.offsetHeight, xView.offsetWidth, negativeButtonEntity)
 
 // this is important stop deleting it
 negativeImgModal.style.height = xView.style.height 

@@ -287,8 +287,8 @@
   background-color: #000000;
   border-color: white;
   /* text-shadow: 4px red; */
-  /* position: fixed; */
-  padding: 50px;
+  position: fixed;
+  padding: 20px;
   font-size: 72px;
 }
 
