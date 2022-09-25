@@ -14,21 +14,39 @@
 //       i'm going to need to flip that in the code. so view is smaller than container
 //       the animations still need to target the container so they can be searched for.
 //       
+
+
 let body = document.getElementById("body")
 let viewHeight = innerHeight 
 let viewWidth = body.clientWidth 
 // scrollArea size
 let maxHeight = viewHeight  * 3
-let maxWidth = viewWidth   * 2
+let maxWidth = viewWidth   * 3
 
+console.log("typeof: " )
+console.log(typeof(window.innerHeight))
 // let maxHeight = 750
 // let maxWidth = 750
 // view sizes
 
-console.log("height: ")
-console.log(viewHeight + "/" + window.innerHeight)
-console.log("width: ")
-console.log(viewWidth + "/" + window.innerWidth)
+function getViewDimensions() {
+ let wHeight = window.innerHeight
+ let wWidth = window.innerWidth
+ let mHeight;
+ let mWidth;
+ if (wWidth < 900) {
+  mWidth = wWidth * 5
+ } else {
+  mWidth = wWidth * 3
+ }
+ mHeight = wHeight * 3
+ return {
+  maxHeight: mHeight,
+  maxWidth: mWidth
+ }
+}
+
+const maxDimensions = getViewDimensions()
 // console.log("self.innerHeight: " + self.innerHeight)
 // console.log(parent.innerHeight);
 // console.log(top.innerHeight);
@@ -38,7 +56,7 @@ console.log(viewWidth + "/" + window.innerWidth)
 let scrollArea = document.querySelector('#container')
 let view = document.querySelector('#view')
 
-scrollArea.setAttribute("style", `height: ${maxHeight}px; width:${maxWidth}px`)
+scrollArea.setAttribute("style", `height: ${maxDimensions.maxHeight}px; width:${maxDimensions.maxWidth}px`)
 view.setAttribute("style", `height: ${viewHeight}px; width: ${viewWidth}px`)
 
 // center the screen in the container.
