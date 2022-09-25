@@ -15,8 +15,8 @@
 //       the animations still need to target the container so they can be searched for.
 //       
 let body = document.getElementById("body")
-let viewHeight = innerHeight - 25
-let viewWidth = body.clientWidth - 25
+let viewHeight = innerHeight 
+let viewWidth = body.clientWidth 
 // scrollArea size
 let maxHeight = viewHeight  * 3
 let maxWidth = viewWidth   * 2

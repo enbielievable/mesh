@@ -1,3 +1,7 @@
+#body {
+  margin: none;
+}
+
 .container {
   position: relative;
   overflow: none;
@@ -11,14 +15,16 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .example {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-} 
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
 
 .view {
   /* cursor: grab; */
   overflow: scroll;
-  margin:auto;
+  /* margin: auto; */
   background-image: url("assets/cover_background_2.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,7 +36,7 @@
 .logo-img {
   /* Hidden by default */
   display: none;
-  overflow:auto;
+  overflow: auto;
   /* position: absolute; */
   z-index: 1;
   background-image: url("assets/background_with_title.png");
@@ -74,8 +80,8 @@
   height: 100%;
   overflow: auto;
   /* background-color: rgb(0, 0, 0); */
-  
-  
+
+
 }
 
 /* Modal Content/Box */
@@ -101,13 +107,13 @@
 .close {
   color: antiquewhite;
   font-size: 28px;
-  font-weight: bold; 
+  font-weight: bold;
   align-self: flex-end;
 }
 
 .close:hover,
 .close:focus {
-  color:#888;
+  color: #888;
   text-decoration: none;
   cursor: pointer;
 }
@@ -118,7 +124,7 @@
   width: 100%;
 }
 
-.background-text-container{
+.background-text-container {
   position: fixed;
   /* height: 100%; */
   width: 100%;
@@ -127,25 +133,40 @@
 
   font-size: 32px;
   margin: auto;
-  /* margin-left: auto;
-  margin-right: auto; */
-  /* display: flex; */
   text-align: center;
-  /* justify-content: center; */
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
 .letter {
   justify-content: center;
+  font-size: 32px;
 }
 
-.article-button{
+@media screen and (min-width: 250px) {
+  .letter {
+    justify-content: center;
+    font-size: 16px;
+  }
+}
+
+
+@media screen and (min-width: 800px) {
+  .letter {
+    justify-content: center;
+    font-size: 24px;
+  }
+}
+
+
+
+.article-button {
   /* text-decoration: none;
   border: none;
   background: none; */
   /* font-size: 100px; */
-  position:fixed;
+  position: fixed;
   align-self: flex-start;
   /* color: white; */
   /* font-size: 100px; */
@@ -155,10 +176,10 @@
 }
 
 .button {
-  font-weight: bold; 
+  font-weight: bold;
   border: none;
   color: #aaa;
-    background-color: rgb(27, 27, 27);
+  background-color: rgb(27, 27, 27);
   /* padding: 15px 32px; */
   /* font-size: 72px; */
   text-align: center;
@@ -169,16 +190,18 @@
   cursor: pointer;
 }
 
-.button-left{
-    padding: 15px 32px;
+.button-left {
+  padding: 15px 32px;
 
   font-size: 48px;
 }
+
 .button-right {
   padding: 15px 32px;
   font-size: 48px;
 }
-#article-button{}
+
+#article-button {}
 
 .article-container {
 
@@ -197,25 +220,27 @@
   /* background-color: black; */
   /* justify-content: center; */
 }
+
 .article-wrapper {
   /* height: 100%; */
   display: flex;
   /* flex-direction: column;
   justify-content: center; */
-  margin:auto;
+  margin: auto;
   width: 100%;
   height: 100%;
   /* flex-basis:100%; */
 }
+
 .article {
   /* justify-content: center; */
   /* overflow: auto !important; */
   overflow: auto;
-  
+
   margin: auto;
   display: none;
   flex-direction: column;
-  height: 95% ; 
+  height: 95%;
   max-width: 750px;
   text-align: center;
   background-color: rgb(27, 27, 27);
@@ -226,7 +251,8 @@
   /* overflow-y:scroll; */
 
 }
-.close-articles{
+
+.close-articles {
   /* align-self: flex-start; */
   /* display: flex; */
   color: #aaa;
@@ -235,23 +261,26 @@
   /* float:right; */
   /* width: 100%; */
 }
+
 .close-article-wrapper {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
-  overflow:auto;
+  overflow: auto;
 }
-.article-img-wrapper{
-  width:100%;
+
+.article-img-wrapper {
+  width: 100%;
 }
-.article-img{
+
+.article-img {
   max-width: 100%;
   width: 100%;
   height: auto;
 
 }
-.article-text {
-}
+
+.article-text {}
 
 .negative-button {
   border-radius: 50%;
@@ -264,15 +293,16 @@
 }
 
 .negative-img {
- 
+
   height: 100%;
   margin: auto;
   max-width: 100%;
- 
+
 }
+
 .negative-img-wrap {
   /* width: 100%; */
-  max-width: 100%; 
+  max-width: 100%;
   /* height: 100%; */
   max-height: 100%;
   /* object-fit: contain; */
