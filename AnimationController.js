@@ -393,7 +393,8 @@ class AnimationEntity {
 class CustomAnimationEntity extends AnimationEntity {
   constructor(parentHeight, parentWidth, element){
     super(parentHeight, parentWidth, element)
-    this._opacity = 1
+    this._opacity = 0
+    this.element.style.opacity = "0"
     this.increasing = false
 
     this.element.style.top = this._getRandomInt(this._parentHeight) + "px"
@@ -405,7 +406,7 @@ class CustomAnimationEntity extends AnimationEntity {
     // and 3.75 for it to display for 6 seconds before it starts to fade.
 
   
-    this.negativeMax = -56.25 / 2
+    this.negativeMax = -56.25
     this.posMax = 3.75 
   
   }
