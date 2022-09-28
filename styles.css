@@ -312,8 +312,9 @@
   border-color: white;
   /* text-shadow: 4px red; */
   position: fixed;
-  padding: 20px;
+  padding: 25px;
   font-size: 72px;
+  z-index: 15;
 }
 
 .negative-img {
@@ -396,7 +397,6 @@
   left: 50%; /* Center the snackbar */
   bottom: 30px; /* 30px from the bottom */
 }
-
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 #snackbar.show {
   visibility: visible; /* Show the snackbar */

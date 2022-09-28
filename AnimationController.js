@@ -425,8 +425,8 @@ class CustomAnimationEntity extends AnimationEntity {
     // it will take 3 (1.5 to get there and 1.5 to get back to 0) minutes to start fading in
     // and 3.75 for it to display for 6 seconds before it starts to fade.
 
-  
-    this.negativeMax = -56.25
+    this.negativeMax = -15
+    // this.negativeMax = 0
     this.posMax = 3.75 
   
   }
@@ -471,11 +471,6 @@ setOpacity () {
   if(this.opacity <= 1 && this.opacity >= 0){
     this.element.style.opacity = this.opacity
   } 
-  // if(this.opacity <= 0){
-  //   document.getElementById("nb").disabled = true
-  // } if(this.opacity === 0.01){
-  //   document.getElementById("nb").disabled = false
-  // }
 }
 
 }
