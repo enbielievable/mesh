@@ -210,17 +210,19 @@ function AnimationElementsFactory(data, container) {
     modalContent.appendChild(modalClose)
     
     // Modal Image
-    let imgLink = document.createElement("a")
+    // let imgLink = document.createElement("a")
     // NOTE: this doesn't work when you just open the index.html locally
-    imgLink.setAttribute("href", window.location.href + imgSrc)
-    imgLink.setAttribute("target", "_blank")
+    // imgLink.setAttribute("href", window.location.href + imgSrc)
+    // imgLink.setAttribute("target", "_blank")
+    let imgDiv = document.createElement("div")
     let modalImg = document.createElement("img")
     modalImg.setAttribute("src", imgSrc)
     modalImg.setAttribute("class", "modal-img")
     modalImg.style.maxWidth = vWidth
     
-    imgLink.appendChild(modalImg)
-    modalContent.appendChild(imgLink)
+    // imgLink.appendChild(modalImg)
+    imgDiv.append(modalImg)
+    modalContent.appendChild(imgDiv)
     
     // Image title
     let modalText = document.createElement("p")
@@ -424,9 +426,10 @@ class CustomAnimationEntity extends AnimationEntity {
     // if opacity doesn't start increasing until it hits -56.25 because only increases at 0.01
     // it will take 3 (1.5 to get there and 1.5 to get back to 0) minutes to start fading in
     // and 3.75 for it to display for 6 seconds before it starts to fade.
+    
 
-    this.negativeMax = -15
-    // this.negativeMax = 0
+    // this.negativeMax = -15
+    this.negativeMax = 0
     this.posMax = 3.75 
   
   }
@@ -521,10 +524,10 @@ const leftButtons = document.getElementsByClassName("button-left")
 const rightButtons = document.getElementsByClassName("button-right")
 const articleCloseButtons = document.getElementsByClassName("close-articles")
 
-console.log("rightButtons")
-console.log(rightButtons)
-console.log("leftButtons")
-console.log(leftButtons)
+// console.log("rightButtons")
+// console.log(rightButtons)
+// console.log("leftButtons")
+// console.log(leftButtons)
 
 function addOnClicks(elements, onclick){
   for(let i = 0; i < elements.length; i++) {
@@ -542,46 +545,57 @@ const xContainer = document.getElementById("container")
 
 
 function createNegativeModal() {
+  const view = document.getElementById("view")
+  let vWidth = view.offsetWidth
+  let vHeight = view.offsetHeight
+
+  
+  // modal
   let modal = document.createElement("div")
   modal.setAttribute("class", "modal")
-  
   const modalId = "sm0"
   modal.setAttribute("id", modalId)
 
+
+  // modal content wrapper
   let modalContent = document.createElement("div")
   modalContent.setAttribute("class", "modal-content")
-
-  let modalClose = document.createElement("span")
+  
+  // close button
+  let modalClose = document.createElement("button")
   modalClose.classList.add("close", "button")
   modalClose.innerText = "✖"
   modalClose.onclick = function () {
     let modal = document.getElementById(modalId)
     modal.style.display = "none"
   }
-
-  let imgWrapper = document.createElement("div")
-  imgWrapper.setAttribute("class", "negative-img-wrap")
-  imgWrapper.setAttribute("id", "negImgWrap")
-
-
-
-  let imgLink = document.createElement("a")
-  imgLink.setAttribute("href", window.location.href + "assets/negatives/DSCF0781_neg.png")
-  imgLink.setAttribute("target", "_blank")
-  let modalImg = document.createElement("img")
-  modalImg.setAttribute("id", "negImg")
-  modalImg.setAttribute("src", "assets/negatives/DSCF0781_neg.png")
-  modalImg.setAttribute("class", "negative-img")
-
-
-
   modalContent.appendChild(modalClose)
 
+  // image
+  let imgWrapper = document.createElement("div")
+  imgWrapper.style.maxHeight = vHeight + "px"
+  imgWrapper.style.maxWidth = vWidth + "px"
+  
+  
+  let modalImg = document.createElement("img")
+  // modalImg.setAttribute("id", "negImg")
+  modalImg.setAttribute("src", "assets/negatives/DSCF0781_neg.png")
+  modalImg.setAttribute("class", "negative-img")
+  // modalImg.setAttribute("class", "modal-img")
+  console.log(`vWidth: ${vWidth}`)
+  // modalImg.style.maxWidth = vWidth + "px"
+  // imgWrapper.style.maxWidth = vWidth + "px"
+  // imgWrapper.style.maxHeight = vHeight + "px"
   imgWrapper.appendChild(modalImg)
+  
   modalContent.appendChild(imgWrapper)
+  
+  
+  
+  // imgWrapper.appendChild(modalImg)
   modal.appendChild(modalContent)
 
-  document.getElementById("view").appendChild(modal)
+  document.getElementById("container").appendChild(modal)
 }
 
 function dispalyNegativeModal () {
@@ -593,13 +607,13 @@ createNegativeModal()
 const negativeButtonEntity = document.getElementById("negative-modal-button")
 negativeButtonEntity.onclick = dispalyNegativeModal
 
-let negativeImgModal = document.getElementById("negImgWrap")
+// let negativeImgModal = document.getElementById("negImgWrap")
 
 // const NegativeAnimationEntity = new CustomAnimationEntity(xContainer.offsetHeight, xContainer.offsetWidth, negativeButtonEntity)
 const NegativeAnimationEntity = new CustomAnimationEntity(xView.offsetHeight, xView.offsetWidth, negativeButtonEntity)
 
 // this is important stop deleting it
-negativeImgModal.style.height = xView.style.height 
+// negativeImgModal.style.height = xView.style.height 
 
 
 
@@ -609,7 +623,7 @@ function getRandomInt(max) {
 
 
 
-initialAnimation()
+// initialAnimation()
 
 // const popup = helperPopup()
 // xView.appendChild(popup)
